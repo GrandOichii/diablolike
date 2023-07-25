@@ -1,0 +1,11 @@
+Model Information:
+* title:	Player Scale Reference
+* source:	https://sketchfab.com/3d-models/player-scale-reference-3bb0febfbd8942f0a4676fa554addf24
+* author:	JrMadMan (https://sketchfab.com/JrMadMan)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Player Scale Reference" (https://sketchfab.com/3d-models/player-scale-reference-3bb0febfbd8942f0a4676fa554addf24) by JrMadMan (https://sketchfab.com/JrMadMan) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

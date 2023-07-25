@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4b4yh0yinxvf"]
+[gd_scene load_steps=7 format=3 uid="uid://b4b4yh0yinxvf"]
 
+[ext_resource type="Script" path="res://DebugLabelContainer.cs" id="1_8oqur"]
 [ext_resource type="PackedScene" uid="uid://dpur83xqk6fri" path="res://Player.tscn" id="1_cl3kr"]
 [ext_resource type="Texture2D" uid="uid://yqy43toig81b" path="res://assets/materials/GridGreen.png" id="1_m3253"]
 
@@ -13,39 +14,44 @@ size = Vector2(50, 50)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lxljd"]
 data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
 
-[node name="Playground" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.41715, 0)
+[node name="Playground" type="Node"]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+[node name="DebugLabelContainer" type="VBoxContainer" parent="UI"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8oqur")
 
-[node name="FirstLabel" type="Label" parent="UI/VBoxContainer"]
+[node name="FirstLabel" type="Label" parent="UI/DebugLabelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "First here"
 
-[node name="SecondLabel" type="Label" parent="UI/VBoxContainer"]
+[node name="SecondLabel" type="Label" parent="UI/DebugLabelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Second here"
 
-[node name="Plane" type="MeshInstance3D" parent="."]
+[node name="Playground" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.41715, 0)
+
+[node name="Plane" type="MeshInstance3D" parent="Playground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.45372, 0)
 mesh = SubResource("PlaneMesh_028pr")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="Plane"]
+[node name="StaticBody3D2" type="StaticBody3D" parent="Playground/Plane"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Plane/StaticBody3D2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Playground/Plane/StaticBody3D2"]
 shape = SubResource("ConcavePolygonShape3D_lxljd")
 
-[node name="Player" parent="." instance=ExtResource("1_cl3kr")]
+[node name="Player" parent="Playground" instance=ExtResource("1_cl3kr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.296832, -3.45372, 0.585862)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Playground"]
 transform = Transform3D(-0.594112, 0.20263, 0.778442, 0.702937, 0.601245, 0.37998, -0.391039, 0.772946, -0.499642, 12.3612, 11.9645, -0.218888)
+
+[connection signal="UpdateLabel" from="Playground/Player" to="UI/DebugLabelContainer" method="OnPlayerUpdateLabel"]

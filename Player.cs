@@ -3,6 +3,9 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
+	[Signal]
+	public delegate void UpdateLabelEventHandler(int id, string text);
+	
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
 	
@@ -38,8 +41,15 @@ public partial class Player : CharacterBody3D
 
 		var mt = MoveTransform * v;
 		Vector3 direction = (MoveTransform * v).Normalized();
-		Mesh.Rotation = new(Mesh.Rotation.X, mt.Z, Mesh.Rotation.Z);
-		DebugLabels.Instance.Amogus = "Amogus";
+//		Mesh.Rotation = new(Mesh.Rotation.X, mt.Z, Mesh.Rotation.Z);
+		EmitSignal(SignalName.UpdateLabel, 0, "Dir: " + direction);
+		EmitSignal(SignalName.UpdateLabel, 1, "Rotation: " + Mesh.RotationDegrees);
+		// 0.7 0 0.7 -- 45
+		// 
+		// 135 - right
+		// 225 - up
+		// -45 - right
+//		GetNode<DebugLabels>("/root/DebugLabels").Text = "as";
 		// Rotation = new(Input.GetActionStrength("move_left") - Input.GetActionStrength("move_right"), 0, Input.GetActionStrength("move_forward") - Input.GetActionStrength("move_backward"));
 //		Vector3 direction = (MoveTransform * new Vector3(inputDir.X, 0, inputDir.Y))
 		if (direction != Vector3.Zero)

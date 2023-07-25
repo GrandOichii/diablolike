@@ -1,9 +1,8 @@
 using Godot;
 using System;
 
-public partial class DebugLabels : Node
+public partial class DebugLabels : Label
 {
-	public string Amogus { get; set; }
 	
 	// Called when the node enters the scene tree for the first time.
 //	public override void _Ready()

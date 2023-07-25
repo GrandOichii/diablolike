@@ -39,6 +39,7 @@ public partial class Player : CharacterBody3D
 		var mt = MoveTransform * v;
 		Vector3 direction = (MoveTransform * v).Normalized();
 		Mesh.Rotation = new(Mesh.Rotation.X, mt.Z, Mesh.Rotation.Z);
+		DebugLabels.Instance.Amogus = "Amogus";
 		// Rotation = new(Input.GetActionStrength("move_left") - Input.GetActionStrength("move_right"), 0, Input.GetActionStrength("move_forward") - Input.GetActionStrength("move_backward"));
 //		Vector3 direction = (MoveTransform * new Vector3(inputDir.X, 0, inputDir.Y))
 		if (direction != Vector3.Zero)

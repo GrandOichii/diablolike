@@ -19,4 +19,3 @@ public partial class DebugLabelContainer : VBoxContainer
 		label.Text = text;
 	}
 }
-

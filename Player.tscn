@@ -14,7 +14,7 @@ MoveTransform = Vector3(1, 2.08165e-12, 0.5)
 
 [node name="Mesh" parent="." instance=ExtResource("2_ov4sc")]
 unique_name_in_owner = true
-transform = Transform3D(-0.00707107, 4.93259e-18, 0.00707107, 3.48787e-18, 0.01, -3.48787e-18, -0.00707107, -1.60554e-26, -0.00707107, 0, -1, 0)
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, -1, 0)
 
 [node name="MeshOld" type="MeshInstance3D" parent="."]
 visible = false

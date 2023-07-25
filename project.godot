@@ -12,17 +12,8 @@ config_version=5
 
 config/name="diablolike"
 run/main_scene="res://Playground.tscn"
-config/features=PackedStringArray("4.1", "C#", "Mobile")
+config/features=PackedStringArray("4.0", "C#", "Mobile")
 config/icon="res://icon.svg"
-
-[autoload]
-
-DebugLabels="*res://DebugLabels.cs"
-
-[display]
-
-window/size/viewport_width=2000
-window/size/viewport_height=1200
 
 [dotnet]
 

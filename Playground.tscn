@@ -1,8 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4b4yh0yinxvf"]
+[gd_scene load_steps=9 format=3 uid="uid://b4b4yh0yinxvf"]
 
 [ext_resource type="Script" path="res://DebugLabelContainer.cs" id="1_8oqur"]
 [ext_resource type="PackedScene" uid="uid://dpur83xqk6fri" path="res://Player.tscn" id="1_cl3kr"]
 [ext_resource type="Texture2D" uid="uid://yqy43toig81b" path="res://assets/materials/GridGreen.png" id="1_m3253"]
+[ext_resource type="Script" path="res://PlaneCollision.cs" id="3_icaw8"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_5dbrd"]
+vertices = PackedVector3Array(-30.6053, 0.46343, -4.35534, -34.8553, 0.46343, -0.105339, -30.6053, 0.46343, 4.14466, -26.1053, 0.46343, -8.60534, -4.35534, 0.46343, 30.3947, -0.105339, 0.46343, 34.8947, 4.14466, 0.46343, 30.6447, 4.39466, 0.46343, -30.6053, 0.144661, 0.46343, -34.8553, -4.35534, 0.46343, -30.6053, -8.60534, 0.46343, -26.1053, 8.64466, 0.46343, -26.1053, 30.3947, 0.46343, 4.39466, 34.8947, 0.46343, 0.144661, 30.6447, 0.46343, -4.35534, 26.1447, 0.46343, -8.60534, -26.1053, 0.46343, -8.60534, -30.6053, 0.46343, 4.14466, -26.3553, 0.46343, 8.64466, -21.8553, 0.46343, 12.8947, -17.3553, 0.46343, -17.3553, -21.8553, 0.46343, -13.1053, -21.8553, 0.46343, 12.8947, -17.6053, 0.46343, 17.3947, -13.1053, 0.46343, 21.6447, 12.8947, 0.46343, 21.8947, -13.1053, 0.46343, 21.6447, -8.85534, 0.46343, 26.1447, -4.35534, 0.46343, 30.3947, 4.14466, 0.46343, 30.6447, 8.64466, 0.46343, 26.3947, -13.1053, 0.46343, 21.6447, 12.8947, 0.46343, 21.8947, 21.6447, 0.46343, 13.1447, 17.3947, 0.46343, -17.3553, -17.3553, 0.46343, -17.3553, -21.8553, 0.46343, 12.8947, 12.8947, 0.46343, 21.8947, 17.3947, 0.46343, 17.6447, 21.6447, 0.46343, 13.1447, 17.3947, 0.46343, -17.3553, 21.6447, 0.46343, 13.1447, 26.1447, 0.46343, 8.89466, 30.3947, 0.46343, 4.39466, 26.1447, 0.46343, -8.60534, 21.8947, 0.46343, -13.1053, -17.3553, 0.46343, -17.3553, 17.3947, 0.46343, -17.3553, 13.1447, 0.46343, -21.8553, 8.64466, 0.46343, -26.1053, -8.60534, 0.46343, -26.1053, -13.1053, 0.46343, -21.8553)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(6, 5, 4), PackedInt32Array(8, 7, 9), PackedInt32Array(9, 7, 11), PackedInt32Array(9, 11, 10), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 15), PackedInt32Array(21, 20, 16), PackedInt32Array(16, 20, 17), PackedInt32Array(17, 20, 18), PackedInt32Array(18, 20, 19), PackedInt32Array(24, 23, 22), PackedInt32Array(30, 29, 25), PackedInt32Array(25, 29, 28), PackedInt32Array(25, 28, 27), PackedInt32Array(25, 27, 26), PackedInt32Array(32, 31, 33), PackedInt32Array(33, 31, 36), PackedInt32Array(33, 36, 35), PackedInt32Array(33, 35, 34), PackedInt32Array(39, 38, 37), PackedInt32Array(45, 44, 40), PackedInt32Array(40, 44, 43), PackedInt32Array(40, 43, 42), PackedInt32Array(40, 42, 41), PackedInt32Array(51, 50, 46), PackedInt32Array(46, 50, 49), PackedInt32Array(46, 49, 48), PackedInt32Array(46, 48, 47)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5a8ca"]
 albedo_texture = ExtResource("1_m3253")
@@ -36,22 +41,26 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Second here"
 
-[node name="Playground" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.41715, 0)
+[node name="Player" parent="." instance=ExtResource("1_cl3kr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.296832, 0.96343, 0.585862)
 
-[node name="Plane" type="MeshInstance3D" parent="Playground"]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_5dbrd")
+
+[node name="Playground" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(0.707107, -4.93259e-16, -0.707107, 3.48787e-16, 1, -3.48787e-16, 0.707107, 1.60554e-24, 0.707107, 0, 4.41715, 0)
+
+[node name="Plane" type="MeshInstance3D" parent="NavigationRegion3D/Playground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.45372, 0)
 mesh = SubResource("PlaneMesh_028pr")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="Playground/Plane"]
+[node name="StaticBody3D2" type="StaticBody3D" parent="NavigationRegion3D/Playground/Plane" groups=["moveable_surface"]]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Playground/Plane/StaticBody3D2"]
+[node name="PlaneCollision" type="CollisionShape3D" parent="NavigationRegion3D/Playground/Plane/StaticBody3D2"]
 shape = SubResource("ConcavePolygonShape3D_lxljd")
+script = ExtResource("3_icaw8")
 
-[node name="Player" parent="Playground" instance=ExtResource("1_cl3kr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.296832, -3.45372, 0.585862)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Playground"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="NavigationRegion3D/Playground"]
 transform = Transform3D(-0.594112, 0.20263, 0.778442, 0.702937, 0.601245, 0.37998, -0.391039, 0.772946, -0.499642, 12.3612, 11.9645, -0.218888)
 
-[connection signal="UpdateLabel" from="Playground/Player" to="UI/DebugLabelContainer" method="OnPlayerUpdateLabel"]
+[connection signal="UpdateLabel" from="Player" to="UI/DebugLabelContainer" method="OnPlayerUpdateLabel"]

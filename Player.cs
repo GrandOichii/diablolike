@@ -83,15 +83,7 @@ public partial class Player : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector3 velocity = Velocity;
 
-		// Add the gravity.
-		if (!IsOnFloor())
-			velocity.Y -= gravity * (float)delta;
-
-		// Handle Jump.
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-			velocity.Y = JumpVelocity;
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
@@ -105,6 +97,26 @@ public partial class Player : CharacterBody3D
 		
 //		MoveTo(direction);
 
+		MoveTo(direction, delta);
+	}
+	
+	public override void _Process(double delta) {
+		if (!NavigationAgentNode.IsNavigationFinished()) {
+			MoveTo(NavigationAgentNode.GetNextPathPosition(), delta);
+		}
+	}
+	
+	private void MoveTo(Vector3 direction, double delta) {
+		Vector3 velocity = Velocity;
+
+		// Add the gravity.
+		if (!IsOnFloor())
+			velocity.Y -= gravity * (float)delta;
+
+		// Handle Jump.
+		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+			velocity.Y = JumpVelocity;
+		
 		if (direction != Vector3.Zero)
 		{
 			var target = MathF.Atan2(Velocity.X,Velocity.Z);
@@ -126,13 +138,5 @@ public partial class Player : CharacterBody3D
 		AnimationsNode.Set("parameters/conditions/run", !idling);
 		
 		MoveAndSlide();
-	}
-	
-	public override void _Process(double delta) {
-		
-	}
-	
-	private void MoveTo(Vector3 direction, float delta) {
-		
 	}
 }

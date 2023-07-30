@@ -1,10 +1,13 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Player : CharacterBody3D
 {
 	[Signal]
 	public delegate void UpdateLabelEventHandler(int id, string text);
+	[Signal]
+	public delegate void GoldAmountChangedEventHandler(int amount);
 	
 //	[Signal]
 //	public delegate void ClickedMoveToEventHandler(Vector3 position);
@@ -16,21 +19,48 @@ public partial class Player : CharacterBody3D
 	private Camera3D CameraNode;
 	private AnimationTree AnimationsNode;
 	private NavigationAgent3D NavigationAgentNode;
+	
+	private bool _fullscreen = false;
+	private readonly float _zoomYMin = 4;
+	private readonly float _zoomYMax = 12;
+	
+	public List<IItem> FocusedItems { get; } = new();
+	
+	private int _curItemI;
+	public int CurItemI {
+		get => _curItemI;
+		set {
+			// TODO set the current item to viewed false
+			// TODO for now just set all to false, then set the current one to true
+			foreach (var item in FocusedItems) item.SetViewed(false);
+			_curItemI = value;
+			if (_curItemI < 0) _curItemI = FocusedItems.Count - 1;
+			if (_curItemI >= FocusedItems.Count) _curItemI = 0;
+			if (FocusedItems.Count > 0) FocusedItems[_curItemI].SetViewed(true);
+		}
+	}
+	
+	private int _gold;
+	public int Gold { get => _gold; set {
+		_gold = value;
+		EmitSignal(SignalName.GoldAmountChanged, _gold);
+	} }
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	
-	[Export]
-	private Vector3 MoveTransform = new(1, 1, 1);
+	private bool _moveTo = false;
+	
 	
 	public override void _Ready() {
+		Gold = 0;
+		
 		MeshNode = GetNode<Node3D>("%Mesh");
 		CameraNode = GetNode<Camera3D>("%Camera");
 		AnimationsNode = GetNode<AnimationTree>("%Animations");
 		NavigationAgentNode = GetNode<NavigationAgent3D>("%NavigationAgent");
 	}
 	
-	private bool _fullscreen = false;
 	public override void _Input(InputEvent e) {
 		if (e.IsActionPressed("zoom_in")) {
 			HandleZoom(4);
@@ -61,20 +91,26 @@ public partial class Player : CharacterBody3D
 				var target = new Vector3(v.X, GlobalPosition.Y, v.Z);
 //				GlobalPosition = target;
 				NavigationAgentNode.TargetPosition = target;
+				_moveTo = true;
 			}
 			// TODO just realised that don't need to rotate anything for isometric look, only the plane itself
 		}
-		
+		if (e.IsActionPressed("scroll_up_focused_items")) {
+			CurItemI += 1;
+		}
+		if (e.IsActionPressed("scroll_down_focused_items")) {
+			CurItemI -= 1;
+		}
+		if (e.IsActionPressed("pickup_item")) {
+			PickUpCurrentItem();
+		}
 	}
 	
-	private readonly float _zoomYMin = 4;
-	private readonly float _zoomYMax = 12;
 	private void HandleZoom(float v) {
 		var d = CameraNode.Position.DirectionTo(MeshNode.Position);
 		var target = CameraNode.Position + (-d * v);
 		if (target.Y > _zoomYMax || target.Y < _zoomYMin) return;
 		
-		GD.Print(target);
 		CreateTween()
 			.TweenProperty(CameraNode, "position", target, .3f)
 			.SetTrans(Tween.TransitionType.Quad);
@@ -83,32 +119,20 @@ public partial class Player : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
-
-
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
-//		Vector2 inputDir = Input.GetVector("move_up", "move_down", "move_left", "move_right");
-		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+		Vector2 inputDir = Input.GetVector("move_up", "move_down", "move_right", "move_left");
+//		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 
 //		Vector3 v = new Vector3((inputDir.Y + inputDir.X) / 2, 0, inputDir.X - inputDir.Y);
-		Vector3 v = new Vector3(inputDir.Y, 0, -inputDir.X);
+//		Vector3 v = new Vector3(inputDir.Y, 0, -inputDir.X);
+		Vector3 v = new Vector3(inputDir.X, 0, inputDir.Y);
 
-		Vector3 direction = (MoveTransform * v).Normalized();
-		
-//		MoveTo(direction);
+		Vector3 direction = (Transform.Basis * v).Normalized();
 
-		MoveTo(direction, delta);
-	}
-	
-	public override void _Process(double delta) {
-		if (!NavigationAgentNode.IsNavigationFinished()) {
-			MoveTo(NavigationAgentNode.GetNextPathPosition(), delta);
-		}
-	}
-	
-	private void MoveTo(Vector3 direction, double delta) {
-		Vector3 velocity = Velocity;
+//		MoveTo(direction, delta);
 
+		var velocity = Velocity;
 		// Add the gravity.
 		if (!IsOnFloor())
 			velocity.Y -= gravity * (float)delta;
@@ -119,24 +143,96 @@ public partial class Player : CharacterBody3D
 		
 		if (direction != Vector3.Zero)
 		{
-			var target = MathF.Atan2(Velocity.X,Velocity.Z);
-			var diff = (float)Mathf.Wrap(target - MeshNode.Rotation.Y, -Math.PI, Math.PI);
-			CreateTween().TweenProperty(MeshNode, "rotation", new Vector3(MeshNode.Rotation.X, MeshNode.Rotation.Y + diff, MeshNode.Rotation.Z), .1f);			
+			_moveTo = false;
+			TurnToVelocity();
 			
 			velocity.X = direction.X * Speed;
 			velocity.Z = direction.Z * Speed;
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+			velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
+			velocity.Z = Mathf.MoveToward(velocity.Z, 0, Speed);
 		}
 
 		Velocity = velocity;
-		var idling = inputDir == Vector2.Zero;
+		var idling = Velocity == Vector3.Zero;
 		AnimationsNode.Set("parameters/conditions/idle", idling);
 		AnimationsNode.Set("parameters/conditions/run", !idling);
 		
 		MoveAndSlide();
 	}
+	
+	private void TurnToVelocity() {
+		var target = MathF.Atan2(Velocity.X,Velocity.Z);
+		var diff = (float)Mathf.Wrap(target - MeshNode.Rotation.Y, -Math.PI, Math.PI);
+		CreateTween().TweenProperty(MeshNode, "rotation", new Vector3(MeshNode.Rotation.X, MeshNode.Rotation.Y + diff, MeshNode.Rotation.Z), .1f);			
+	}
+	
+	public override void _Process(double delta) {
+		if (!NavigationAgentNode.IsNavigationFinished() && _moveTo) {
+			var pos = NavigationAgentNode.GetNextPathPosition();
+			var dir = GlobalPosition.DirectionTo(pos);
+			Velocity = dir * Speed;
+			TurnToVelocity();
+			
+			
+			var idling = Velocity == Vector3.Zero;
+			AnimationsNode.Set("parameters/conditions/idle", idling);
+			AnimationsNode.Set("parameters/conditions/run", !idling);
+			MoveAndSlide();
+//			MoveTo(pos, delta);
+		}
+	}
+	
+	private void OnItemPickupAreaBodyEntered(Node3D body)
+	{
+		switch (body) {
+			case IItem item:
+				AddFocusItem(item);
+				break;
+		}
+	}
+	
+	private void OnItemPickupAreaBodyExited(Node3D body)
+	{
+		switch (body) {
+			case IItem item:
+				RemoveFocusItem(item);
+				break;
+		}
+	}
+	
+	private void AddFocusItem(IItem item) {
+		item.OnEnterFocus(this);
+		
+		FocusedItems.Add(item);
+		CurItemI = FocusedItems.Count - 1;
+		
+	}
+	
+	private void RemoveFocusItem(IItem item) {
+		item.OnLeaveFocus(this);
+		
+		FocusedItems.Remove(item);
+		if (FocusedItems.Count == 0) return;
+		
+		// TODO
+		if (CurItemI >= FocusedItems.Count)
+			CurItemI = FocusedItems.Count - 1;
+			
+	}
+	
+	private void PickUpCurrentItem() {
+		if (FocusedItems.Count == 0) return;
+		
+		var item = FocusedItems[CurItemI];
+		item.OnPickUp(this);
+		
+		CurItemI -= 1;
+	}
 }
+
+
+
+

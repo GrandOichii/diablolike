@@ -14,4 +14,9 @@ using System;
 //	}
 //}
 
-interface IMoveableSurface {}
+public interface IItem {
+	public void OnPickUp(Player player);
+	public void OnEnterFocus(Player player);
+	public void OnLeaveFocus(Player player);
+	public void SetViewed(bool v);
+}

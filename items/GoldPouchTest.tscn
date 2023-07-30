@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://biyim1wdfpgmy"]
+
+[ext_resource type="PackedScene" uid="uid://dof2jwh37fyox" path="res://assets/bag_with_gold/scene.gltf" id="1_khwhk"]
+[ext_resource type="Script" path="res://items/GoldPouchTest.cs" id="1_umj6j"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mp670"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="GoldPouchTest" type="StaticBody3D"]
+collision_layer = 2
+script = ExtResource("1_umj6j")
+
+[node name="Mesh" parent="." instance=ExtResource("1_khwhk")]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0.0705314, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109274, 0.180799, 0)
+shape = SubResource("BoxShape3D_mp670")
+
+[node name="NameLabel" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.698405, 0)
+layers = 2
+billboard = 1
+text = "ITEM NAME HERE"
+font_size = 40

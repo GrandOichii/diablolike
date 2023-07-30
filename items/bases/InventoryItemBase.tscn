@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqg0xs3pj2lak"]
+
+[ext_resource type="PackedScene" uid="uid://ctj6wghwblaij" path="res://items/bases/ItemBase.tscn" id="1_2ouvv"]
+[ext_resource type="Script" path="res://items/bases/InventoryItemBase.cs" id="2_c3a4m"]
+
+[node name="InventoryItemBase" instance=ExtResource("1_2ouvv")]
+script = ExtResource("2_c3a4m")
+InventoryName = ""
+InventoryIcon = null

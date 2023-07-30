@@ -1,0 +1,11 @@
+Model Information:
+* title:	Potion
+* source:	https://sketchfab.com/3d-models/potion-80eb4c22131845baa375d3424c03b57f
+* author:	Cyril43 (https://sketchfab.com/Cyril43)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Potion" (https://sketchfab.com/3d-models/potion-80eb4c22131845baa375d3424c03b57f) by Cyril43 (https://sketchfab.com/Cyril43) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

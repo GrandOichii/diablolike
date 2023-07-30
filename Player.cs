@@ -8,6 +8,10 @@ public partial class Player : CharacterBody3D
 	public delegate void UpdateLabelEventHandler(int id, string text);
 	[Signal]
 	public delegate void GoldAmountChangedEventHandler(int amount);
+	[Signal]
+	public delegate void ToggleOpenInventoryEventHandler(Player player, bool open);
+	[Signal]
+	public delegate void AddItemToInventoryEventHandler(Player player, InventoryItemBase item);
 	
 //	[Signal]
 //	public delegate void ClickedMoveToEventHandler(Vector3 position);
@@ -21,7 +25,7 @@ public partial class Player : CharacterBody3D
 	private NavigationAgent3D NavigationAgentNode;
 	
 	private bool _fullscreen = false;
-	private readonly float _zoomYMin = 4;
+	private readonly float _zoomYMin = 2;
 	private readonly float _zoomYMax = 12;
 	
 	public List<IItem> FocusedItems { get; } = new();
@@ -50,6 +54,7 @@ public partial class Player : CharacterBody3D
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	
 	private bool _moveTo = false;
+	private bool _inventoryOpen = false;
 	
 	
 	public override void _Ready() {
@@ -75,7 +80,7 @@ public partial class Player : CharacterBody3D
 			DisplayServer.WindowSetMode(flag);
 			_fullscreen = !_fullscreen;
 		}
-		if (e.IsActionPressed("move_to")) {
+		if (!_inventoryOpen && e.IsActionPressed("move_to")) {
 			var spaceState = GetWorld3D().DirectSpaceState;
 			// TODO crashes app on exit ???
 			var mousePos = GetViewport().GetMousePosition();
@@ -103,6 +108,10 @@ public partial class Player : CharacterBody3D
 		}
 		if (e.IsActionPressed("pickup_item")) {
 			PickUpCurrentItem();
+		}
+		if (e.IsActionPressed("open_inventory")) {
+			EmitSignal(SignalName.ToggleOpenInventory, this, _inventoryOpen);
+			_inventoryOpen = !_inventoryOpen;
 		}
 	}
 	
@@ -230,6 +239,18 @@ public partial class Player : CharacterBody3D
 		item.OnPickUp(this);
 		
 		CurItemI -= 1;
+	}
+	
+//	private bool _inventoryOpen = false;
+//	private void ToggleInventory() {
+//		var target = 0;
+//		if (_inventoryOpen) target = DisplayServer.ScreenGetSize().Y;
+//
+//		_inventoryOpen = !_inventoryOpen;
+//	}
+
+	public void AddToInventory(InventoryItemBase item) {
+		EmitSignal(SignalName.AddItemToInventory, this, item);
 	}
 }
 

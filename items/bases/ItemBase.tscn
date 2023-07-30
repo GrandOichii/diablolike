@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctj6wghwblaij"]
+
+[ext_resource type="Script" path="res://items/bases/ItemBase.cs" id="1_rroie"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mp670"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="ItemBase" type="StaticBody3D"]
+collision_layer = 2
+script = ExtResource("1_rroie")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109274, 0.180799, 0)
+shape = SubResource("BoxShape3D_mp670")
+
+[node name="NameLabel" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.698405, 0)
+layers = 2
+billboard = 1
+text = "ITEM NAME HERE"
+font_size = 40

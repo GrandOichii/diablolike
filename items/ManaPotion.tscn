@@ -5,10 +5,10 @@
 [ext_resource type="Script" path="res://items/ManaPotion.cs" id="2_otk1n"]
 [ext_resource type="Resource" uid="uid://3v1uexvum26a" path="res://items/actions/RestoreManaAction.tres" id="3_g7wqf"]
 [ext_resource type="Texture2D" uid="uid://bs2l1oeh1xc5f" path="res://assets/item_icons/mana_potion.png" id="4_gcqw2"]
-[ext_resource type="Script" path="res://items/ItemResource.cs" id="5_an2g3"]
+[ext_resource type="Script" path="res://items/resources/ItemResource.cs" id="5_mwc3c"]
 
 [sub_resource type="Resource" id="Resource_nh563"]
-script = ExtResource("5_an2g3")
+script = ExtResource("5_mwc3c")
 InventoryName = "Mana Potion"
 InventoryIcon = ExtResource("4_gcqw2")
 Description = "A small mana potion, restores some of the energy required to cast spells.

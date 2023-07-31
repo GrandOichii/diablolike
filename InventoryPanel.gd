@@ -67,7 +67,7 @@ func _on_item_list_item_selected(index):
 #	for action_key in action_keys:
 #	print(action_keys)
 
-func _on_player_remove_item_from_inventory(item, idx):
+func _on_player_remove_item_from_inventory(_item, idx):
 	if item_list_node.is_selected(idx):
 		item_list_node.deselect_all()
 		remove_item_info()

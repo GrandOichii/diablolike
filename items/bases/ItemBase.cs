@@ -3,7 +3,6 @@ using System;
 
 public partial class ItemBase : StaticBody3D, IItem
 {
-
 	public virtual string ItemName { get; } = "<NO_ITEM_NAME>";
 	
 	private Label3D NameLabel;

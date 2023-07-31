@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://3v1uexvum26a"]
+
+[ext_resource type="Script" path="res://items/actions/RestoreManaAction.cs" id="1_pqhdt"]
+
+[resource]
+script = ExtResource("1_pqhdt")
+Amount = 20

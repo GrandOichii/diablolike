@@ -12,7 +12,12 @@ public partial class Player : CharacterBody3D
 	public delegate void ToggleOpenInventoryEventHandler(Player player, bool open);
 	[Signal]
 	public delegate void AddItemToInventoryEventHandler(Player player, InventoryItemBase item);
-	
+	[Signal]
+	public delegate void RemoveItemFromInventoryEventHandler(ItemResource item, int inventoryIdx);
+	[Signal]
+	public delegate void HealthChangedEventHandler(int health);
+	[Signal]
+	public delegate void ManaChangedEventHandler(int mana);
 //	[Signal]
 //	public delegate void ClickedMoveToEventHandler(Vector3 position);
 	
@@ -49,6 +54,24 @@ public partial class Player : CharacterBody3D
 		_gold = value;
 		EmitSignal(SignalName.GoldAmountChanged, _gold);
 	} }
+	
+	public int MaxHealth { get; set; } = 100;
+	private int _health;
+	public int Health { get => _health; set {
+		_health = value;
+		if (_health < 0) _health = 0;
+		if (_health > MaxHealth) _health = MaxHealth;
+		EmitSignal(SignalName.HealthChanged, _health);
+	}}
+	
+	public int MaxMana { get; set; } = 100;
+	private int _mana;
+	public int Mana { get => _mana; set {
+		_mana = value;
+		if (_mana < 0) _mana = 0;
+		if (_mana > MaxMana) _mana = MaxMana;
+		EmitSignal(SignalName.ManaChanged, _mana);
+	}}
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -59,6 +82,7 @@ public partial class Player : CharacterBody3D
 	
 	public override void _Ready() {
 		Gold = 0;
+		Health = 50;
 		
 		MeshNode = GetNode<Node3D>("%Mesh");
 		CameraNode = GetNode<Camera3D>("%Camera");
@@ -147,8 +171,8 @@ public partial class Player : CharacterBody3D
 			velocity.Y -= gravity * (float)delta;
 
 		// Handle Jump.
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-			velocity.Y = JumpVelocity;
+//		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+//			velocity.Y = JumpVelocity;
 		
 		if (direction != Vector3.Zero)
 		{
@@ -251,6 +275,10 @@ public partial class Player : CharacterBody3D
 
 	public void AddToInventory(InventoryItemBase item) {
 		EmitSignal(SignalName.AddItemToInventory, this, item);
+	}
+	
+	public void RemoveFromInventory(ItemResource item, int inventoryIdx) {
+		EmitSignal(SignalName.RemoveItemFromInventory, item, inventoryIdx);
 	}
 }
 

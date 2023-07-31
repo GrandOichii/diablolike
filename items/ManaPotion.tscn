@@ -1,0 +1,26 @@
+[gd_scene load_steps=8 format=3 uid="uid://eoypekng8w30"]
+
+[ext_resource type="PackedScene" uid="uid://dqg0xs3pj2lak" path="res://items/bases/InventoryItemBase.tscn" id="1_1g550"]
+[ext_resource type="PackedScene" uid="uid://nn6lft1hbb65" path="res://assets/mana_potion/Mesh.gltf" id="2_lowbq"]
+[ext_resource type="Script" path="res://items/ManaPotion.cs" id="2_otk1n"]
+[ext_resource type="Resource" uid="uid://3v1uexvum26a" path="res://items/actions/RestoreManaAction.tres" id="3_g7wqf"]
+[ext_resource type="Texture2D" uid="uid://bs2l1oeh1xc5f" path="res://assets/item_icons/mana_potion.png" id="4_gcqw2"]
+[ext_resource type="Script" path="res://items/ItemResource.cs" id="5_an2g3"]
+
+[sub_resource type="Resource" id="Resource_nh563"]
+script = ExtResource("5_an2g3")
+InventoryName = "Mana Potion"
+InventoryIcon = ExtResource("4_gcqw2")
+Description = "A small mana potion, restores some of the energy required to cast spells.
+
+Restores [color=blue]20[/color] mana."
+Actions = {
+"Drink": ExtResource("3_g7wqf")
+}
+
+[node name="ManaPotion" instance=ExtResource("1_1g550")]
+script = ExtResource("2_otk1n")
+Item = SubResource("Resource_nh563")
+
+[node name="Mesh" parent="." index="0" instance=ExtResource("2_lowbq")]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0)

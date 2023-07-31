@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+using System.Collections.Generic;
+
 //public partial class Common : Node
 //{
 //	// Called when the node enters the scene tree for the first time.
@@ -19,4 +21,15 @@ public interface IItem {
 	public void OnEnterFocus(Player player);
 	public void OnLeaveFocus(Player player);
 	public void SetViewed(bool v);
+}
+
+abstract public partial class ItemAction : Resource {
+	abstract public void Do(ItemResource item, Player player, int inventoryIdx);
+}
+
+abstract public partial class DestroyItemAction : ItemAction {
+	
+	public override void Do(ItemResource item, Player player, int inventoryIdx) {
+		player.RemoveFromInventory(item, inventoryIdx);
+	}
 }

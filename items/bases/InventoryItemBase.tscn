@@ -5,5 +5,4 @@
 
 [node name="InventoryItemBase" instance=ExtResource("1_2ouvv")]
 script = ExtResource("2_c3a4m")
-InventoryName = ""
-InventoryIcon = null
+Item = null

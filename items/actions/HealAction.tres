@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cgi6trxwx8jdx"]
+
+[ext_resource type="Script" path="res://items/actions/HealAction.cs" id="1_rsno1"]
+
+[resource]
+script = ExtResource("1_rsno1")
+Amount = 10

@@ -1,14 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://7g6whfppx0iu"]
+[gd_scene load_steps=9 format=3 uid="uid://7g6whfppx0iu"]
 
 [ext_resource type="PackedScene" uid="uid://dqg0xs3pj2lak" path="res://items/bases/InventoryItemBase.tscn" id="1_jhr80"]
 [ext_resource type="PackedScene" uid="uid://b6tieppyvuik5" path="res://assets/potion/scene.gltf" id="2_2a7in"]
 [ext_resource type="Script" path="res://items/HealthPotion.cs" id="2_nd4q6"]
-[ext_resource type="Texture2D" uid="uid://bnj3euad1godl" path="res://assets/item_icons/health_potion.png" id="3_0eup8"]
+[ext_resource type="Script" path="res://items/actions/HealAction.cs" id="3_1sgol"]
+[ext_resource type="Texture2D" uid="uid://bnj3euad1godl" path="res://assets/item_icons/health_potion.png" id="4_ify0c"]
+[ext_resource type="Script" path="res://items/ItemResource.cs" id="5_3u1bw"]
+
+[sub_resource type="Resource" id="Resource_ydi78"]
+script = ExtResource("3_1sgol")
+Amount = 10
+
+[sub_resource type="Resource" id="Resource_la1h2"]
+script = ExtResource("5_3u1bw")
+InventoryName = "Health Potion"
+InventoryIcon = ExtResource("4_ify0c")
+Description = "A small health potion, enough to heal a small wound.
+
+Restores [color=red]10[/color] health."
+Actions = {
+"Drink": SubResource("Resource_ydi78")
+}
 
 [node name="HealthPotion" instance=ExtResource("1_jhr80")]
 script = ExtResource("2_nd4q6")
-InventoryName = "Health Potion"
-InventoryIcon = ExtResource("3_0eup8")
+Item = SubResource("Resource_la1h2")
 
 [node name="Mesh" parent="." index="2" instance=ExtResource("2_2a7in")]
 transform = Transform3D(0.21, 0, 0, 0, 0.21, 0, 0, 0, 0.21, -0.0576161, 0.20609, -0.105125)

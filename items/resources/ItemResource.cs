@@ -13,6 +13,5 @@ public partial class ItemResource : Resource {
 	[Export(PropertyHint.MultilineText)]
 	public string Description { get; set; } 
 	[Export]
-	public Dictionary<string, ItemAction> Actions { get; set; } = new();
-//	public List<string> Keys => Actions.Keys.ToList();
+	public virtual Dictionary<string, ItemAction> Actions { get; set; } = new();
 }

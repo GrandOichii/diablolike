@@ -2,6 +2,43 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+public enum PlayerProperty {
+	Health,
+	Mana
+}
+
+public class Property<T> where T : IComparable {
+	public delegate void ChangedDel(); 
+
+	public event ChangedDel MinChanged;
+	public event ChangedDel MaxChanged;
+	
+#nullable enable
+	private T? _min;
+	public T? Min { get => _min; set {
+		_min = value;
+		MinChanged?.Invoke();
+	}}
+
+	private T? _max;
+	public T? Max { get => _max; set {
+		_max = value;
+		MaxChanged?.Invoke();
+	}}
+#nullable disable
+
+	private T _v;
+	public event ChangedDel Changed;
+	public T Value { get => _v; set {
+		_v = value;
+		if (_min is not null && _v.CompareTo(_min) < 0)
+			_v = _min;
+		if (_max is not null && _v.CompareTo(_max) > 0)
+			_v = _max;
+		Changed?.Invoke();
+	}}
+}
+
 public partial class Player : CharacterBody3D
 {
 	[Signal]
@@ -35,6 +72,9 @@ public partial class Player : CharacterBody3D
 	
 	public List<IItem> FocusedItems { get; } = new();
 	
+	// TODO? should always be int
+	public Dictionary<PlayerProperty, Property<int>> Properties = new();
+	
 	private int _curItemI;
 	public int CurItemI {
 		get => _curItemI;
@@ -55,23 +95,26 @@ public partial class Player : CharacterBody3D
 		EmitSignal(SignalName.GoldAmountChanged, _gold);
 	} }
 	
-	public int MaxHealth { get; set; } = 100;
-	private int _health;
-	public int Health { get => _health; set {
-		_health = value;
-		if (_health < 0) _health = 0;
-		if (_health > MaxHealth) _health = MaxHealth;
-		EmitSignal(SignalName.HealthChanged, _health);
-	}}
+	public int Health { 
+		get => Properties[PlayerProperty.Health].Value; 
+		set => Properties[PlayerProperty.Health].Value = value;
+	}
 	
-	public int MaxMana { get; set; } = 100;
-	private int _mana;
-	public int Mana { get => _mana; set {
-		_mana = value;
-		if (_mana < 0) _mana = 0;
-		if (_mana > MaxMana) _mana = MaxMana;
-		EmitSignal(SignalName.ManaChanged, _mana);
-	}}
+	public int MaxHealth { 
+		get => Properties[PlayerProperty.Health].Max; 
+		set => Properties[PlayerProperty.Health].Max = value;
+	}
+	
+	public int Mana { 
+		get => Properties[PlayerProperty.Mana].Value; 
+		set => Properties[PlayerProperty.Mana].Value = value;
+	}
+	
+	public int MaxMana { 
+		get => Properties[PlayerProperty.Mana].Max; 
+		set => Properties[PlayerProperty.Mana].Max = value;
+	}
+	
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -81,6 +124,21 @@ public partial class Player : CharacterBody3D
 	
 	
 	public override void _Ready() {
+		// create properties
+		var healthProperty = new Property<int>();
+		healthProperty.Max = 100;
+		healthProperty.Min = 0;
+		healthProperty.Value = 50;
+		healthProperty.Changed += () => EmitSignal(SignalName.HealthChanged, healthProperty.Value);
+		Properties.Add(PlayerProperty.Health, healthProperty);
+		
+		var manaProperty = new Property<int>();
+		manaProperty.Max = 100;
+		manaProperty.Min = 0;
+		manaProperty.Value = 50;
+		manaProperty.Changed += () => EmitSignal(SignalName.ManaChanged, manaProperty.Value);
+		Properties.Add(PlayerProperty.Mana, manaProperty);
+		
 		Gold = 0;
 		Health = 50;
 		Mana = 50;
@@ -93,7 +151,6 @@ public partial class Player : CharacterBody3D
 	
 	public override void _Input(InputEvent e) {
 		if (e.IsActionPressed("zoom_in")) {
-//			GD.Print("amofus");
 			HandleZoom(4);
 			
 		}
@@ -149,7 +206,6 @@ public partial class Player : CharacterBody3D
 		CreateTween()
 			.TweenProperty(CameraNode, "position", target, .3f)
 			.SetTrans(Tween.TransitionType.Quad);
-//		GD.Print();
 	}
 
 	public override void _PhysicsProcess(double delta)

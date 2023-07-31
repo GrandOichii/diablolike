@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class RestoreManaAction : DestroyItemAction
+public partial class RestoreManaAction : RemoveFromInventoryItemAction
 {
 	[Export]
 	public int Amount { get; set; }

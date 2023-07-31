@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://items/HealthPotion.cs" id="2_nd4q6"]
 [ext_resource type="Script" path="res://items/actions/HealAction.cs" id="3_1sgol"]
 [ext_resource type="Texture2D" uid="uid://bnj3euad1godl" path="res://assets/item_icons/health_potion.png" id="4_ify0c"]
-[ext_resource type="Script" path="res://items/ItemResource.cs" id="5_3u1bw"]
+[ext_resource type="Script" path="res://items/resources/ItemResource.cs" id="5_3u1bw"]
 
 [sub_resource type="Resource" id="Resource_ydi78"]
 script = ExtResource("3_1sgol")

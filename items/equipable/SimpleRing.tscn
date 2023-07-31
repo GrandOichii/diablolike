@@ -1,0 +1,13 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1l23wp0tn2se"]
+
+[ext_resource type="PackedScene" uid="uid://dqg0xs3pj2lak" path="res://items/bases/InventoryItemBase.tscn" id="1_no80m"]
+[ext_resource type="Script" path="res://items/equipable/SimpleRing.cs" id="2_n3h53"]
+[ext_resource type="PackedScene" uid="uid://b1ob16irp3726" path="res://assets/decorated_ring/scene.gltf" id="2_wpd5w"]
+[ext_resource type="Resource" uid="uid://dtswco3rsv5nk" path="res://items/resources/EquipableItemResource.tres" id="3_vm0dj"]
+
+[node name="SimpleRing" instance=ExtResource("1_no80m")]
+script = ExtResource("2_n3h53")
+Item = ExtResource("3_vm0dj")
+
+[node name="Mesh" parent="." index="0" instance=ExtResource("2_wpd5w")]
+transform = Transform3D(0.06, 0, 0, 0, 0.06, 0, 0, 0, 0.06, 0, 0, 0)

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class HealAction : DestroyItemAction
+public partial class HealAction : RemoveFromInventoryItemAction
 {
 	[Export]
 	public int Amount { get; set; }

@@ -14,7 +14,5 @@ public partial class HealthPotion : InventoryItemBase
 	
 	public override void _Ready() {
 		base._Ready();
-		
-//		Item.Actions.Add("Drink", new HealItemAction());
 	}
 }

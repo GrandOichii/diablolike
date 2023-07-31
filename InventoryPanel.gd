@@ -48,6 +48,7 @@ func _on_player_add_item_to_inventory(_player, item):
 	item_list_node.set_item_metadata(i, item.Item)
 
 func _on_item_list_item_selected(index):
+	clear_item_actions()
 	var item = item_list_node.get_item_metadata(index)
 	item_name_label.text = item.InventoryName
 #	item_description_text.

@@ -83,6 +83,7 @@ public partial class Player : CharacterBody3D
 	public override void _Ready() {
 		Gold = 0;
 		Health = 50;
+		Mana = 50;
 		
 		MeshNode = GetNode<Node3D>("%Mesh");
 		CameraNode = GetNode<Camera3D>("%Camera");
@@ -92,6 +93,7 @@ public partial class Player : CharacterBody3D
 	
 	public override void _Input(InputEvent e) {
 		if (e.IsActionPressed("zoom_in")) {
+//			GD.Print("amofus");
 			HandleZoom(4);
 			
 		}

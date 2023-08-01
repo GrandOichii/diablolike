@@ -13,7 +13,7 @@ public partial class EquipItemAction : RemoveFromInventoryItemAction
 				GD.Print("Warn: Tried to equip non-equipable item");
 				return;
 		}
-		GD.Print("Equip " + item.InventoryName + " to " + eItem.Slot);
+		// GD.Print("Equip " + item.InventoryName + " to " + eItem.Slot);
 		eItem.OnEquip(player);
 		base.Do(item, player, inventoryIdx);
 //		eItem.OnEquip(player);

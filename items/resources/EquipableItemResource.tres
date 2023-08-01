@@ -7,6 +7,9 @@
 [resource]
 script = ExtResource("1_vd50w")
 Slot = 3
+PropertyMod = {
+"MaxHealth": 10
+}
 InventoryName = "Simple Ring"
 InventoryIcon = ExtResource("2_6ivo0")
 Description = "A simple ring, perhaps some family heirloom. Doesn't do much, although you definately feel healthier while wearing it.

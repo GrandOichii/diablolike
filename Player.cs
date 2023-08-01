@@ -4,37 +4,25 @@ using System.Collections.Generic;
 
 public enum PlayerProperty {
 	Health,
-	Mana
+	MaxHealth,
+	Mana,
+	MaxMana
 }
 
 public class Property<T> where T : IComparable {
 	public delegate void ChangedDel(); 
 
-	public event ChangedDel MinChanged;
-	public event ChangedDel MaxChanged;
-	
-#nullable enable
-	private T? _min;
-	public T? Min { get => _min; set {
-		_min = value;
-		MinChanged?.Invoke();
-	}}
-
-	private T? _max;
-	public T? Max { get => _max; set {
-		_max = value;
-		MaxChanged?.Invoke();
-	}}
-#nullable disable
+	public Property<T>? Max { get; set; }
+	public Property<T>? Min { get; set; }
 
 	private T _v;
 	public event ChangedDel Changed;
 	public T Value { get => _v; set {
 		_v = value;
-		if (_min is not null && _v.CompareTo(_min) < 0)
-			_v = _min;
-		if (_max is not null && _v.CompareTo(_max) > 0)
-			_v = _max;
+		if (Min is not null && _v.CompareTo(Min.Value) < 0)
+			_v = Min.Value;
+		if (Max is not null && _v.CompareTo(Max.Value) > 0)
+			_v = Max.Value;
 		Changed?.Invoke();
 	}}
 }
@@ -55,6 +43,10 @@ public partial class Player : CharacterBody3D
 	public delegate void HealthChangedEventHandler(int health);
 	[Signal]
 	public delegate void ManaChangedEventHandler(int mana);
+	[Signal]
+	public delegate void MaxHealthChangedEventHandler(int maxHealth);
+	[Signal]
+	public delegate void MaxManaChangedEventHandler(int maxMana);
 //	[Signal]
 //	public delegate void ClickedMoveToEventHandler(Vector3 position);
 	
@@ -101,8 +93,8 @@ public partial class Player : CharacterBody3D
 	}
 	
 	public int MaxHealth { 
-		get => Properties[PlayerProperty.Health].Max; 
-		set => Properties[PlayerProperty.Health].Max = value;
+		get => Properties[PlayerProperty.MaxHealth].Value; 
+		set => Properties[PlayerProperty.MaxHealth].Value = value;
 	}
 	
 	public int Mana { 
@@ -111,8 +103,8 @@ public partial class Player : CharacterBody3D
 	}
 	
 	public int MaxMana { 
-		get => Properties[PlayerProperty.Mana].Max; 
-		set => Properties[PlayerProperty.Mana].Max = value;
+		get => Properties[PlayerProperty.MaxMana].Value; 
+		set => Properties[PlayerProperty.MaxMana].Value = value;
 	}
 	
 
@@ -124,17 +116,37 @@ public partial class Player : CharacterBody3D
 	
 	
 	public override void _Ready() {
+		MeshNode = GetNode<Node3D>("%Mesh");
+		CameraNode = GetNode<Camera3D>("%Camera");
+		AnimationsNode = GetNode<AnimationTree>("%Animations");
+		NavigationAgentNode = GetNode<NavigationAgent3D>("%NavigationAgent");
 		// create properties
+		var maxHealthProperty = new Property<int>();
+		maxHealthProperty.Value = 100;
+		Properties.Add(PlayerProperty.MaxHealth, maxHealthProperty);
+		maxHealthProperty.Changed += () => EmitSignal(SignalName.MaxHealthChanged, maxHealthProperty.Value);
+		
+		var minHealthProperty = new Property<int>();
+		minHealthProperty.Value = 0;
+		
+		var maxManaProperty = new Property<int>();
+		maxManaProperty.Value = 100;
+		Properties.Add(PlayerProperty.MaxMana, maxManaProperty);
+		maxManaProperty.Changed += () => EmitSignal(SignalName.MaxManaChanged, maxManaProperty.Value);
+		
+		var minManaProperty = new Property<int>();
+		minManaProperty.Value = 0;
+		
 		var healthProperty = new Property<int>();
-		healthProperty.Max = 100;
-		healthProperty.Min = 0;
+		healthProperty.Max = maxHealthProperty;
+		healthProperty.Min = minHealthProperty;
 		healthProperty.Value = 50;
 		healthProperty.Changed += () => EmitSignal(SignalName.HealthChanged, healthProperty.Value);
 		Properties.Add(PlayerProperty.Health, healthProperty);
 		
 		var manaProperty = new Property<int>();
-		manaProperty.Max = 100;
-		manaProperty.Min = 0;
+		manaProperty.Max = maxManaProperty;
+		manaProperty.Min = minManaProperty;
 		manaProperty.Value = 50;
 		manaProperty.Changed += () => EmitSignal(SignalName.ManaChanged, manaProperty.Value);
 		Properties.Add(PlayerProperty.Mana, manaProperty);
@@ -142,11 +154,7 @@ public partial class Player : CharacterBody3D
 		Gold = 0;
 		Health = 50;
 		Mana = 50;
-		
-		MeshNode = GetNode<Node3D>("%Mesh");
-		CameraNode = GetNode<Camera3D>("%Camera");
-		AnimationsNode = GetNode<AnimationTree>("%Animations");
-		NavigationAgentNode = GetNode<NavigationAgent3D>("%NavigationAgent");
+
 	}
 	
 	public override void _Input(InputEvent e) {

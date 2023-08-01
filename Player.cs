@@ -120,10 +120,11 @@ public partial class Player : CharacterBody3D
 		CameraNode = GetNode<Camera3D>("%Camera");
 		AnimationsNode = GetNode<AnimationTree>("%Animations");
 		NavigationAgentNode = GetNode<NavigationAgent3D>("%NavigationAgent");
+
 		// create properties
 		var maxHealthProperty = new Property<int>();
-		maxHealthProperty.Value = 100;
 		Properties.Add(PlayerProperty.MaxHealth, maxHealthProperty);
+		maxHealthProperty.Value = 100;
 		maxHealthProperty.Changed += () => EmitSignal(SignalName.MaxHealthChanged, maxHealthProperty.Value);
 		
 		var minHealthProperty = new Property<int>();

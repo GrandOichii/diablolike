@@ -11,4 +11,23 @@ public partial class EquipmentSlot : TextureRect
 	public override void _Ready() {
 		Placeholder = Texture;
 	}
+
+	private void OnPlayerItemEquip(EquipableItemResource item, EquipSlot slot, CharacterBody3D player)
+	{
+		if (slot != Slot) return;
+		
+		Texture = item.InventoryIcon;
+		// Replace with function body.
+	}
+	
+	private void OnPlayerItemUnequip(Resource item, EquipSlot slot, CharacterBody3D player)
+	{
+		if (slot != Slot) return;
+		
+		Texture = Placeholder;
+		// Replace with function body.
+	}
 }
+
+
+

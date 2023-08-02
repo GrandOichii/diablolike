@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=3 uid="uid://b7tc13ufqb5hc"]
+
+[ext_resource type="PackedScene" uid="uid://dqg0xs3pj2lak" path="res://items/bases/InventoryItemBase.tscn" id="1_hlfdu"]
+[ext_resource type="Script" path="res://items/equipable/ManaRing.cs" id="2_4dyll"]
+[ext_resource type="Resource" uid="uid://dbclfwrgo5pm6" path="res://items/actions/EquipItemAction.tres" id="3_8rry5"]
+[ext_resource type="PackedScene" uid="uid://b1ob16irp3726" path="res://assets/decorated_ring/scene.gltf" id="3_ptowc"]
+[ext_resource type="Texture2D" uid="uid://hv8m0x68eria" path="res://assets/item_icons/batch1/tile070.png" id="4_ookd3"]
+[ext_resource type="Script" path="res://items/resources/EquipableItemResource.cs" id="5_hys0n"]
+
+[sub_resource type="Resource" id="Resource_nloc2"]
+script = ExtResource("5_hys0n")
+Slot = 3
+PropertyMod = {
+"MaxMana": 50
+}
+InventoryName = "Mana Ring"
+InventoryIcon = ExtResource("4_ookd3")
+Description = "An enchanted ring, is given out to all Mages of the Dragotha.
+
+[color=blue]+50[/color] Mana while equipped"
+Actions = {
+"Equip": ExtResource("3_8rry5")
+}
+
+[node name="ManaRing" instance=ExtResource("1_hlfdu")]
+script = ExtResource("2_4dyll")
+Item = SubResource("Resource_nloc2")
+
+[node name="Mesh" parent="." index="2" instance=ExtResource("3_ptowc")]
+transform = Transform3D(0.06, 0, 0, 0, 0.06, 0, 0, 0, 0.06, 0, 0, 0)

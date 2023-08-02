@@ -11,7 +11,7 @@ public partial class InventoryItemBase : ItemBase
 	
 	
 	public override void OnPickUp(Player player) {
-		player.AddToInventory(this);
+		player.AddToInventory(this.Item);
 		base.OnPickUp(player);
 	}
 	

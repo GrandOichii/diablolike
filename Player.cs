@@ -39,22 +39,18 @@ public partial class Player : CharacterBody3D
 	[Signal]
 	public delegate void ToggleOpenInventoryEventHandler(Player player, bool open);
 	[Signal]
-	public delegate void AddItemToInventoryEventHandler(Player player, InventoryItemBase item);
+	public delegate void AddItemToInventoryEventHandler(Player player, ItemResource item);
 	[Signal]
 	public delegate void RemoveItemFromInventoryEventHandler(ItemResource item, int inventoryIdx);
-//	[Signal]
-//	public delegate void HealthChangedEventHandler(int health);
-//	[Signal]
-//	public delegate void ManaChangedEventHandler(int mana);
-//	[Signal]
-//	public delegate void MaxHealthChangedEventHandler(int maxHealth);
-//	[Signal]
-//	public delegate void MaxManaChangedEventHandler(int maxMana);
 	[Signal]
 	public delegate void ClickedMoveToEventHandler(Vector3 position);
 	[Signal]
 	public delegate void PropertyChangedEventHandler(int property, int v);
-	
+	[Signal]
+	public delegate void ItemEquipEventHandler(EquipableItemResource item, int slot, Player player);
+	[Signal]
+	public delegate void ItemUnequipEventHandler(EquipableItemResource item, int slot, Player player);
+
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
 	
@@ -71,7 +67,26 @@ public partial class Player : CharacterBody3D
 	
 	// TODO? should always be int
 	public Dictionary<PlayerProperty, Property<int>> Properties = new();
+
+#nullable enable
+	public Dictionary<EquipSlot, EquipableItemResource?> Slots = new();
+
+	public EquipableItemResource? this[EquipSlot slot] {
+		get =>  Slots[slot];
+		set {
+			var prevItem = this[slot];
+			if (prevItem is not null) {
+				prevItem.OnUnequip(this);
+				AddToInventory(prevItem);
+				EmitSignal(SignalName.ItemUnequip, prevItem, (int)slot, this); 
+			}
+			value.OnEquip(this);
+			Slots[slot] = value;
+			EmitSignal(SignalName.ItemEquip, value, (int)slot, this);
+		}
+	}	
 	
+#nullable disable
 	private int _curItemI;
 	public int CurItemI {
 		get => _curItemI;
@@ -165,7 +180,13 @@ public partial class Player : CharacterBody3D
 		var defenceProperty = new Property<int>();
 		defenceProperty.Changed += () => EmitSignal(SignalName.PropertyChanged, (int)PlayerProperty.Defence, defenceProperty.Value);
 		Properties.Add(PlayerProperty.Defence, defenceProperty);
+
+		// create equip slots
+		foreach (EquipSlot slot in Enum.GetValues(typeof(EquipSlot))) {
+			Slots[slot] = null;
+		}
 		
+		// set initial values
 		Gold = 0;
 		Health = 50;
 		MaxHealth = 100;
@@ -359,7 +380,7 @@ public partial class Player : CharacterBody3D
 //		_inventoryOpen = !_inventoryOpen;
 //	}
 
-	public void AddToInventory(InventoryItemBase item) {
+	public void AddToInventory(ItemResource item) {
 		EmitSignal(SignalName.AddItemToInventory, this, item);
 	}
 	

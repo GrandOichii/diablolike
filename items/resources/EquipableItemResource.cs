@@ -5,7 +5,7 @@ using Godot.Collections;
 
 public enum EquipSlot {
 	Head,
-	Body,
+	Chest,
 	Legs,
 	Ring,
 	Weapon,
@@ -19,7 +19,6 @@ public partial class EquipableItemResource : ItemResource
 	[Export]
 	public Dictionary<string, int> PropertyMod { get; set; }  = new();
 	
-	// TODO figure out how to actually export PlayerProperty, currently doesn't work
 	public virtual void OnEquip(Player player) {
 		foreach (var pair in PropertyMod) {
 			var propName = Enum.Parse<PlayerProperty>(pair.Key);
@@ -29,7 +28,7 @@ public partial class EquipableItemResource : ItemResource
 		}
 	}
 	
-	public virtual void OnUneqiup(Player player) {
+	public virtual void OnUnequip(Player player) {
 		foreach (var pair in PropertyMod) {
 			var propName = Enum.Parse<PlayerProperty>(pair.Key);
 			var p = player.Properties[propName];

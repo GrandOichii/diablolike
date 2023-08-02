@@ -14,7 +14,8 @@ public partial class EquipItemAction : RemoveFromInventoryItemAction
 				return;
 		}
 		// GD.Print("Equip " + item.InventoryName + " to " + eItem.Slot);
-		eItem.OnEquip(player);
+		player[eItem.Slot] = eItem;
+		
 		base.Do(item, player, inventoryIdx);
 //		eItem.OnEquip(player);
 	}

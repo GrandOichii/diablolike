@@ -44,8 +44,8 @@ func clear_item_actions():
 		n.queue_free()
 
 func _on_player_add_item_to_inventory(_player, item):
-	var i = item_list_node.add_item(item.Item.InventoryName, item.Item.InventoryIcon)
-	item_list_node.set_item_metadata(i, item.Item)
+	var i = item_list_node.add_item(item.InventoryName, item.InventoryIcon)
+	item_list_node.set_item_metadata(i, item)
 
 func _on_item_list_item_selected(index):
 	clear_item_actions()

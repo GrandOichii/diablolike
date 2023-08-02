@@ -12,8 +12,10 @@ public enum PlayerProperty {
 public class Property<T> where T : IComparable {
 	public delegate void ChangedDel(); 
 
+#nullable enable
 	public Property<T>? Max { get; set; }
 	public Property<T>? Min { get; set; }
+#nullable disable
 
 	private T _v;
 	public event ChangedDel Changed;
@@ -39,16 +41,18 @@ public partial class Player : CharacterBody3D
 	public delegate void AddItemToInventoryEventHandler(Player player, InventoryItemBase item);
 	[Signal]
 	public delegate void RemoveItemFromInventoryEventHandler(ItemResource item, int inventoryIdx);
-	[Signal]
-	public delegate void HealthChangedEventHandler(int health);
-	[Signal]
-	public delegate void ManaChangedEventHandler(int mana);
-	[Signal]
-	public delegate void MaxHealthChangedEventHandler(int maxHealth);
-	[Signal]
-	public delegate void MaxManaChangedEventHandler(int maxMana);
+//	[Signal]
+//	public delegate void HealthChangedEventHandler(int health);
+//	[Signal]
+//	public delegate void ManaChangedEventHandler(int mana);
+//	[Signal]
+//	public delegate void MaxHealthChangedEventHandler(int maxHealth);
+//	[Signal]
+//	public delegate void MaxManaChangedEventHandler(int maxMana);
 	[Signal]
 	public delegate void ClickedMoveToEventHandler(Vector3 position);
+	[Signal]
+	public delegate void PropertyChangedEventHandler(int property, int v);
 	
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
@@ -125,7 +129,7 @@ public partial class Player : CharacterBody3D
 		var maxHealthProperty = new Property<int>();
 		Properties.Add(PlayerProperty.MaxHealth, maxHealthProperty);
 		maxHealthProperty.Value = 100;
-		maxHealthProperty.Changed += () => EmitSignal(SignalName.MaxHealthChanged, maxHealthProperty.Value);
+		maxHealthProperty.Changed += () => EmitSignal(SignalName.PropertyChanged, (int)PlayerProperty.MaxHealth, maxHealthProperty.Value);
 		
 		var minHealthProperty = new Property<int>();
 		minHealthProperty.Value = 0;
@@ -133,7 +137,7 @@ public partial class Player : CharacterBody3D
 		var maxManaProperty = new Property<int>();
 		maxManaProperty.Value = 100;
 		Properties.Add(PlayerProperty.MaxMana, maxManaProperty);
-		maxManaProperty.Changed += () => EmitSignal(SignalName.MaxManaChanged, maxManaProperty.Value);
+		maxManaProperty.Changed += () => EmitSignal(SignalName.PropertyChanged, (int)PlayerProperty.MaxMana, maxManaProperty.Value);
 		
 		var minManaProperty = new Property<int>();
 		minManaProperty.Value = 0;
@@ -142,14 +146,14 @@ public partial class Player : CharacterBody3D
 		healthProperty.Max = maxHealthProperty;
 		healthProperty.Min = minHealthProperty;
 		healthProperty.Value = 50;
-		healthProperty.Changed += () => EmitSignal(SignalName.HealthChanged, healthProperty.Value);
+		healthProperty.Changed += () => EmitSignal(SignalName.PropertyChanged, (int)PlayerProperty.Health, healthProperty.Value);
 		Properties.Add(PlayerProperty.Health, healthProperty);
 		
 		var manaProperty = new Property<int>();
 		manaProperty.Max = maxManaProperty;
 		manaProperty.Min = minManaProperty;
 		manaProperty.Value = 50;
-		manaProperty.Changed += () => EmitSignal(SignalName.ManaChanged, manaProperty.Value);
+		manaProperty.Changed += () => EmitSignal(SignalName.PropertyChanged, (int)PlayerProperty.Mana, manaProperty.Value);
 		Properties.Add(PlayerProperty.Mana, manaProperty);
 		
 		Gold = 0;

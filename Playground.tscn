@@ -1,15 +1,14 @@
-[gd_scene load_steps=23 format=3 uid="uid://b4b4yh0yinxvf"]
+[gd_scene load_steps=22 format=3 uid="uid://b4b4yh0yinxvf"]
 
 [ext_resource type="Script" path="res://DebugLabelContainer.cs" id="1_8oqur"]
 [ext_resource type="PackedScene" uid="uid://dpur83xqk6fri" path="res://Player.tscn" id="1_cl3kr"]
 [ext_resource type="Texture2D" uid="uid://yqy43toig81b" path="res://assets/materials/GridGreen.png" id="1_m3253"]
+[ext_resource type="PackedScene" uid="uid://c1sjj5tnca6ru" path="res://PropertyBar.tscn" id="1_qoc4e"]
 [ext_resource type="Script" path="res://GoldLabel.gd" id="2_gtueo"]
-[ext_resource type="Script" path="res://HealthBar.gd" id="3_entbs"]
 [ext_resource type="Script" path="res://PlaneCollision.cs" id="3_icaw8"]
 [ext_resource type="Script" path="res://InventoryPanel.gd" id="3_u3cpo"]
 [ext_resource type="Texture2D" uid="uid://c3b8lwmkdkwbr" path="res://assets/materials/mana_bar_test.png" id="4_2ximb"]
 [ext_resource type="Texture2D" uid="uid://bnj3euad1godl" path="res://assets/item_icons/health_potion.png" id="4_nyq5p"]
-[ext_resource type="Script" path="res://ManaBar.gd" id="5_2d4jk"]
 [ext_resource type="Texture2D" uid="uid://bg3mcqd7bqam6" path="res://assets/materials/health_bar_bg.png" id="5_gj6s6"]
 [ext_resource type="PackedScene" uid="uid://dml0w5jhv0lo1" path="res://items/GoldPouch.tscn" id="5_r6vu7"]
 [ext_resource type="Texture2D" uid="uid://b4hraepetgwgd" path="res://assets/materials/health_bar_test.png" id="5_rge61"]
@@ -37,30 +36,29 @@ data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0,
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="HealthBar" type="TextureProgressBar" parent="UI"]
-unique_name_in_owner = true
-offset_right = 512.0
-offset_bottom = 40.0
+[node name="HealthBar" parent="UI" instance=ExtResource("1_qoc4e")]
+offset_left = 15.0
+offset_top = 14.0
+offset_right = -625.0
+offset_bottom = -594.0
 scale = Vector2(0.5, 0.5)
-size_flags_horizontal = 0
-value = 50.0
 texture_under = ExtResource("5_gj6s6")
 texture_progress = ExtResource("5_rge61")
-texture_progress_offset = Vector2(2.08165e-12, 2.08165e-12)
-script = ExtResource("3_entbs")
+MaxProperty = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="ManaBar" type="TextureProgressBar" parent="UI"]
-unique_name_in_owner = true
+[node name="ManaBar" parent="UI" instance=ExtResource("1_qoc4e")]
 clip_contents = true
-offset_top = 22.0
-offset_right = 512.0
-offset_bottom = 62.0
+offset_left = 15.0
+offset_top = 41.0
+offset_right = -625.0
+offset_bottom = -567.0
 scale = Vector2(0.5, 0.5)
-size_flags_horizontal = 0
-value = 50.0
 texture_under = ExtResource("5_gj6s6")
 texture_progress = ExtResource("4_2ximb")
-script = ExtResource("5_2d4jk")
+Property = 2
+MaxProperty = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI"]
 visible = false
@@ -246,9 +244,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50323, 0.0326309, 3.80314)
 [connection signal="AddItemToInventory" from="Player" to="UI/InventoryPanel" method="_on_player_add_item_to_inventory"]
 [connection signal="ClickedMoveTo" from="Player" to="NavigationPointer" method="_on_player_clicked_move_to"]
 [connection signal="GoldAmountChanged" from="Player" to="UI/GoldLabel" method="_on_player_gold_amount_changed"]
-[connection signal="HealthChanged" from="Player" to="UI/HealthBar" method="_on_player_health_changed"]
-[connection signal="ManaChanged" from="Player" to="UI/ManaBar" method="_on_player_mana_changed"]
-[connection signal="MaxHealthChanged" from="Player" to="UI/HealthBar" method="_on_player_max_health_changed"]
-[connection signal="MaxManaChanged" from="Player" to="UI/ManaBar" method="_on_player_max_mana_changed"]
+[connection signal="PropertyChanged" from="Player" to="UI/HealthBar" method="OnPlayerPropertyChanged"]
+[connection signal="PropertyChanged" from="Player" to="UI/ManaBar" method="OnPlayerPropertyChanged"]
 [connection signal="RemoveItemFromInventory" from="Player" to="UI/InventoryPanel" method="_on_player_remove_item_from_inventory"]
 [connection signal="ToggleOpenInventory" from="Player" to="UI/InventoryPanel" method="_on_player_toggle_open_inventory"]

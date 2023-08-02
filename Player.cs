@@ -158,7 +158,9 @@ public partial class Player : CharacterBody3D
 		
 		Gold = 0;
 		Health = 50;
+		MaxHealth = 100;
 		Mana = 50;
+		MaxMana = 100;
 
 	}
 	

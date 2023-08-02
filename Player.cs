@@ -84,7 +84,9 @@ public partial class Player : CharacterBody3D
 			Slots[slot] = value;
 			EmitSignal(SignalName.ItemEquip, value, (int)slot, this);
 		}
-	}	
+	}
+	
+	// TODO implement basic zombie npc
 	
 #nullable disable
 	private int _curItemI;

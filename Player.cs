@@ -6,7 +6,8 @@ public enum PlayerProperty {
 	Health,
 	MaxHealth,
 	Mana,
-	MaxMana
+	MaxMana,
+	Defence
 }
 
 public class Property<T> where T : IComparable {
@@ -111,6 +112,11 @@ public partial class Player : CharacterBody3D
 		set => Properties[PlayerProperty.MaxMana].Value = value;
 	}
 	
+	public int Defence {
+		get => Properties[PlayerProperty.Defence].Value; 
+		set => Properties[PlayerProperty.Defence].Value = value; 
+	}
+	
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -156,12 +162,16 @@ public partial class Player : CharacterBody3D
 		manaProperty.Changed += () => EmitSignal(SignalName.PropertyChanged, (int)PlayerProperty.Mana, manaProperty.Value);
 		Properties.Add(PlayerProperty.Mana, manaProperty);
 		
+		var defenceProperty = new Property<int>();
+		defenceProperty.Changed += () => EmitSignal(SignalName.PropertyChanged, (int)PlayerProperty.Defence, defenceProperty.Value);
+		Properties.Add(PlayerProperty.Defence, defenceProperty);
+		
 		Gold = 0;
 		Health = 50;
 		MaxHealth = 100;
 		Mana = 50;
 		MaxMana = 100;
-
+		Defence = 0;
 	}
 	
 	public override void _Input(InputEvent e) {

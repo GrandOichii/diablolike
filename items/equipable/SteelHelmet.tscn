@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=3 uid="uid://difgnpano42be"]
+
+[ext_resource type="PackedScene" uid="uid://dqg0xs3pj2lak" path="res://items/bases/InventoryItemBase.tscn" id="1_owomr"]
+[ext_resource type="PackedScene" uid="uid://botxlqflhy1hs" path="res://assets/jousting_helmet/scene.gltf" id="2_7otqt"]
+[ext_resource type="Script" path="res://items/equipable/SteelHelmet.cs" id="2_ueavf"]
+[ext_resource type="Resource" uid="uid://dbclfwrgo5pm6" path="res://items/actions/EquipItemAction.tres" id="3_rich7"]
+[ext_resource type="Texture2D" uid="uid://djk7x6k38ef18" path="res://assets/item_icons/batch1/tile012.png" id="4_8sely"]
+[ext_resource type="Script" path="res://items/resources/EquipableItemResource.cs" id="5_dy44a"]
+
+[sub_resource type="Resource" id="Resource_okhr2"]
+script = ExtResource("5_dy44a")
+Slot = 0
+PropertyMod = {
+"Defence": 15
+}
+InventoryName = "Steel Helmet"
+InventoryIcon = ExtResource("4_8sely")
+Description = "A standart settl helmet. Offers good protection for your average soldier.
+
+[color=gray]+15[/color] Defence while equipped"
+Actions = {
+"Equip": ExtResource("3_rich7")
+}
+
+[node name="SteelHelmet" instance=ExtResource("1_owomr")]
+script = ExtResource("2_ueavf")
+Item = SubResource("Resource_okhr2")
+
+[node name="Mesh" parent="." index="0" instance=ExtResource("2_7otqt")]
+transform = Transform3D(-1.5299e-08, -1.22075e-16, -0.35, 1.22075e-16, 0.35, -1.22075e-16, 0.35, -1.22075e-16, -1.5299e-08, 0.499755, 0, 0.685476)

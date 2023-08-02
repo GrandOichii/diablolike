@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b4b4yh0yinxvf"]
+[gd_scene load_steps=29 format=3 uid="uid://b4b4yh0yinxvf"]
 
 [ext_resource type="Script" path="res://DebugLabelContainer.cs" id="1_8oqur"]
 [ext_resource type="PackedScene" uid="uid://dpur83xqk6fri" path="res://Player.tscn" id="1_cl3kr"]
@@ -12,12 +12,18 @@
 [ext_resource type="Texture2D" uid="uid://bg3mcqd7bqam6" path="res://assets/materials/health_bar_bg.png" id="5_gj6s6"]
 [ext_resource type="PackedScene" uid="uid://dml0w5jhv0lo1" path="res://items/GoldPouch.tscn" id="5_r6vu7"]
 [ext_resource type="Texture2D" uid="uid://b4hraepetgwgd" path="res://assets/materials/health_bar_test.png" id="5_rge61"]
+[ext_resource type="PackedScene" uid="uid://b8bufw0anduej" path="res://EquipmentSlot.tscn" id="8_7rvf3"]
 [ext_resource type="PackedScene" uid="uid://7g6whfppx0iu" path="res://items/HealthPotion.tscn" id="8_s82a4"]
 [ext_resource type="PackedScene" uid="uid://dnfikonc7xbb6" path="res://PropertyLabel.tscn" id="8_totn6"]
+[ext_resource type="Texture2D" uid="uid://bqqqfki2iuely" path="res://assets/item_icons/equipment_placeholders/sword.png" id="9_ii3yx"]
 [ext_resource type="PackedScene" uid="uid://btihknyu16c38" path="res://NavigationPointer.tscn" id="10_t0bsp"]
+[ext_resource type="Texture2D" uid="uid://b6f1ddo6mnyor" path="res://assets/item_icons/equipment_placeholders/helmet.png" id="10_ukman"]
 [ext_resource type="Script" path="res://NavigationPointer.gd" id="11_8tnqw"]
+[ext_resource type="Texture2D" uid="uid://c60m5daimys6g" path="res://assets/item_icons/equipment_placeholders/chest.png" id="11_jx8lc"]
+[ext_resource type="Texture2D" uid="uid://bo4hcqesw7fk2" path="res://assets/item_icons/equipment_placeholders/legs.png" id="12_ognu0"]
 [ext_resource type="PackedScene" uid="uid://eoypekng8w30" path="res://items/ManaPotion.tscn" id="13_et4gt"]
 [ext_resource type="PackedScene" uid="uid://b1l23wp0tn2se" path="res://items/equipable/SimpleRing.tscn" id="16_ynkn8"]
+[ext_resource type="PackedScene" uid="uid://difgnpano42be" path="res://items/equipable/SteelHelmet.tscn" id="19_geboq"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_5dbrd"]
 vertices = PackedVector3Array(-30.6053, 0.46343, -4.35534, -34.8553, 0.46343, -0.105339, -30.6053, 0.46343, 4.14466, -26.1053, 0.46343, -8.60534, -4.35534, 0.46343, 30.3947, -0.105339, 0.46343, 34.8947, 4.14466, 0.46343, 30.6447, 4.39466, 0.46343, -30.6053, 0.144661, 0.46343, -34.8553, -4.35534, 0.46343, -30.6053, -8.60534, 0.46343, -26.1053, 8.64466, 0.46343, -26.1053, 30.3947, 0.46343, 4.39466, 34.8947, 0.46343, 0.144661, 30.6447, 0.46343, -4.35534, 26.1447, 0.46343, -8.60534, -26.1053, 0.46343, -8.60534, -30.6053, 0.46343, 4.14466, -26.3553, 0.46343, 8.64466, -21.8553, 0.46343, 12.8947, -17.3553, 0.46343, -17.3553, -21.8553, 0.46343, -13.1053, -21.8553, 0.46343, 12.8947, -17.6053, 0.46343, 17.3947, -13.1053, 0.46343, 21.6447, 12.8947, 0.46343, 21.8947, -13.1053, 0.46343, 21.6447, -8.85534, 0.46343, 26.1447, -4.35534, 0.46343, 30.3947, 4.14466, 0.46343, 30.6447, 8.64466, 0.46343, 26.3947, -13.1053, 0.46343, 21.6447, 12.8947, 0.46343, 21.8947, 21.6447, 0.46343, 13.1447, 17.3947, 0.46343, -17.3553, -17.3553, 0.46343, -17.3553, -21.8553, 0.46343, 12.8947, 12.8947, 0.46343, 21.8947, 17.3947, 0.46343, 17.6447, 21.6447, 0.46343, 13.1447, 17.3947, 0.46343, -17.3553, 21.6447, 0.46343, 13.1447, 26.1447, 0.46343, 8.89466, 30.3947, 0.46343, 4.39466, 26.1447, 0.46343, -8.60534, 21.8947, 0.46343, -13.1053, -17.3553, 0.46343, -17.3553, 17.3947, 0.46343, -17.3553, 13.1447, 0.46343, -21.8553, 8.64466, 0.46343, -26.1053, -8.60534, 0.46343, -26.1053, -13.1053, 0.46343, -21.8553)
@@ -141,8 +147,42 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="EquipmentView" type="MarginContainer" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top"]
+[node name="EquipmentView" type="HBoxContainer" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top"]
 layout_mode = 2
+
+[node name="DamageEquipment" type="VBoxContainer" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/EquipmentView"]
+layout_mode = 2
+alignment = 1
+
+[node name="WeaponSlot" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/EquipmentView/DamageEquipment" instance=ExtResource("8_7rvf3")]
+layout_mode = 2
+texture = ExtResource("9_ii3yx")
+Slot = 4
+
+[node name="PlayerView" type="Control" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/EquipmentView"]
+layout_mode = 2
+
+[node name="DefenceEquipment" type="VBoxContainer" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/EquipmentView"]
+layout_mode = 2
+alignment = 1
+
+[node name="HeadSlot" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/EquipmentView/DefenceEquipment" instance=ExtResource("8_7rvf3")]
+layout_mode = 2
+texture = ExtResource("10_ukman")
+
+[node name="ChestSlot" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/EquipmentView/DefenceEquipment" instance=ExtResource("8_7rvf3")]
+layout_mode = 2
+texture = ExtResource("11_jx8lc")
+Slot = 1
+
+[node name="LegsSlot" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/EquipmentView/DefenceEquipment" instance=ExtResource("8_7rvf3")]
+layout_mode = 2
+texture = ExtResource("12_ognu0")
+Slot = 2
+
+[node name="RingSlot" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/EquipmentView/DefenceEquipment" instance=ExtResource("8_7rvf3")]
+layout_mode = 2
+Slot = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top"]
 layout_mode = 2
@@ -187,6 +227,18 @@ text = "/"
 [node name="MaxManaLabel" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer/PlayerManaContainer" instance=ExtResource("8_totn6")]
 layout_mode = 2
 Property = 3
+
+[node name="DefenceContainer" type="HBoxContainer" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer/DefenceContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.435294, 0.435294, 0.435294, 1)
+text = "Defence: "
+
+[node name="DefenceLabel" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer/DefenceContainer" instance=ExtResource("8_totn6")]
+layout_mode = 2
+Property = 4
 
 [node name="Bottom" type="HBoxContainer" parent="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -288,6 +340,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.19378, 0.0326309, -2.04174
 [node name="SimpleRing" parent="." instance=ExtResource("16_ynkn8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50323, 0.0326309, 3.80314)
 
+[node name="SteelHelmet" parent="." instance=ExtResource("19_geboq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.56056, 0.0326307, -1.89637)
+
 [connection signal="item_selected" from="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Bottom/ItemList" to="UI/InventoryPanel" method="_on_item_list_item_selected"]
 [connection signal="AddItemToInventory" from="Player" to="UI/InventoryPanel" method="_on_player_add_item_to_inventory"]
 [connection signal="ClickedMoveTo" from="Player" to="NavigationPointer" method="_on_player_clicked_move_to"]
@@ -298,5 +353,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50323, 0.0326309, 3.80314)
 [connection signal="PropertyChanged" from="Player" to="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer/PlayerHealthContainer/MaxHealthLabel" method="OnPlayerPropertyChanged"]
 [connection signal="PropertyChanged" from="Player" to="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer/PlayerManaContainer/ManaLabel" method="OnPlayerPropertyChanged"]
 [connection signal="PropertyChanged" from="Player" to="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer/PlayerManaContainer/MaxManaLabel" method="OnPlayerPropertyChanged"]
+[connection signal="PropertyChanged" from="Player" to="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer/DefenceContainer/DefenceLabel" method="OnPlayerPropertyChanged"]
 [connection signal="RemoveItemFromInventory" from="Player" to="UI/InventoryPanel" method="_on_player_remove_item_from_inventory"]
 [connection signal="ToggleOpenInventory" from="Player" to="UI/InventoryPanel" method="_on_player_toggle_open_inventory"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b4b4yh0yinxvf"]
+[gd_scene load_steps=23 format=3 uid="uid://b4b4yh0yinxvf"]
 
 [ext_resource type="Script" path="res://DebugLabelContainer.cs" id="1_8oqur"]
 [ext_resource type="PackedScene" uid="uid://dpur83xqk6fri" path="res://Player.tscn" id="1_cl3kr"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://dml0w5jhv0lo1" path="res://items/GoldPouch.tscn" id="5_r6vu7"]
 [ext_resource type="Texture2D" uid="uid://b4hraepetgwgd" path="res://assets/materials/health_bar_test.png" id="5_rge61"]
 [ext_resource type="PackedScene" uid="uid://7g6whfppx0iu" path="res://items/HealthPotion.tscn" id="8_s82a4"]
+[ext_resource type="PackedScene" uid="uid://btihknyu16c38" path="res://NavigationPointer.tscn" id="10_t0bsp"]
+[ext_resource type="Script" path="res://NavigationPointer.gd" id="11_8tnqw"]
 [ext_resource type="PackedScene" uid="uid://eoypekng8w30" path="res://items/ManaPotion.tscn" id="13_et4gt"]
 [ext_resource type="PackedScene" uid="uid://b1l23wp0tn2se" path="res://items/equipable/SimpleRing.tscn" id="16_ynkn8"]
 
@@ -204,6 +206,11 @@ script = ExtResource("3_icaw8")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="NavigationRegion3D/Playground"]
 transform = Transform3D(-0.594112, 0.20263, 0.778442, 0.702937, 0.601245, 0.37998, -0.391039, 0.772946, -0.499642, 12.3612, 11.9645, -0.218888)
 
+[node name="NavigationPointer" parent="." groups=["dissapear_on_player_collide"] instance=ExtResource("10_t0bsp")]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+visible = false
+script = ExtResource("11_8tnqw")
+
 [node name="Player" parent="." instance=ExtResource("1_cl3kr")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.296832, 0.96343, 0.585862)
@@ -237,6 +244,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50323, 0.0326309, 3.80314)
 
 [connection signal="item_selected" from="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/HBoxContainer/ItemList" to="UI/InventoryPanel" method="_on_item_list_item_selected"]
 [connection signal="AddItemToInventory" from="Player" to="UI/InventoryPanel" method="_on_player_add_item_to_inventory"]
+[connection signal="ClickedMoveTo" from="Player" to="NavigationPointer" method="_on_player_clicked_move_to"]
 [connection signal="GoldAmountChanged" from="Player" to="UI/GoldLabel" method="_on_player_gold_amount_changed"]
 [connection signal="HealthChanged" from="Player" to="UI/HealthBar" method="_on_player_health_changed"]
 [connection signal="ManaChanged" from="Player" to="UI/ManaBar" method="_on_player_mana_changed"]

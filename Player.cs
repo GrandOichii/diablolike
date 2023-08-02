@@ -47,8 +47,8 @@ public partial class Player : CharacterBody3D
 	public delegate void MaxHealthChangedEventHandler(int maxHealth);
 	[Signal]
 	public delegate void MaxManaChangedEventHandler(int maxMana);
-//	[Signal]
-//	public delegate void ClickedMoveToEventHandler(Vector3 position);
+	[Signal]
+	public delegate void ClickedMoveToEventHandler(Vector3 position);
 	
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
@@ -189,8 +189,8 @@ public partial class Player : CharacterBody3D
 //				GlobalPosition = target;
 				NavigationAgentNode.TargetPosition = target;
 				_moveTo = true;
+				EmitSignal(SignalName.ClickedMoveTo, target);
 			}
-			// TODO just realised that don't need to rotate anything for isometric look, only the plane itself
 		}
 		if (e.IsActionPressed("scroll_up_focused_items")) {
 			CurItemI += 1;
@@ -287,6 +287,9 @@ public partial class Player : CharacterBody3D
 	
 	private void OnItemPickupAreaBodyEntered(Node3D body)
 	{
+		// TODO works fine, just not when the navigation pointer is very close
+		if (body.IsInGroup("dissapear_on_player_collide"))
+			body.Visible = false;
 		switch (body) {
 			case IItem item:
 				AddFocusItem(item);

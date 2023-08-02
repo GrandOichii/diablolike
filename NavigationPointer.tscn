@@ -1,8 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://btihknyu16c38"]
+[gd_scene load_steps=3 format=3 uid="uid://btihknyu16c38"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_j0vj5"]
 
-[node name="NavigationPointer" type="Node3D"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_l02rd"]
+height = 1.7051
+radius = 2.74301
+
+[node name="NavigationPointer" type="StaticBody3D"]
+collision_layer = 2
 
 [node name="Arrows" type="Node3D" parent="."]
 
@@ -25,3 +30,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(-2.87654e-08, 1.50178, -0.107195, 4.88862e-08, -1.01296, -0.158923, -1, -9.27193e-08, -4.68564e-09, -1.5, 0.606, 2.08165e-12)
 mesh = SubResource("PrismMesh_j0vj5")
 skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.639772, 0)
+shape = SubResource("CylinderShape3D_l02rd")

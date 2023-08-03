@@ -4,3 +4,5 @@
 
 [resource]
 script = ExtResource("1_1rrvl")
+AnimationMap = {}
+AnimationsNode = null

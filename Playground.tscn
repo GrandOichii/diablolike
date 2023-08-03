@@ -350,15 +350,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6082, 0.0326307, 5.48023)
 
 [node name="Zombie" parent="." instance=ExtResource("26_pbi74")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.72468, 0.939888, -4.33175)
-Behaviour = null
 
 [node name="Zombie2" parent="." instance=ExtResource("26_pbi74")]
 transform = Transform3D(0.977261, 0, -0.212041, 0, 1, 0, 0.212041, 0, 0.977261, 5.93554, 0.939888, -3.19039)
-Behaviour = null
 
 [node name="Zombie3" parent="." instance=ExtResource("26_pbi74")]
 transform = Transform3D(0.600281, 0, 0.799789, 0, 1, 0, -0.799789, 0, 0.600281, 2.84458, 0.939888, -2.03313)
-Behaviour = null
 
 [connection signal="item_selected" from="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Bottom/ItemList" to="UI/InventoryPanel" method="_on_item_list_item_selected"]
 [connection signal="AddItemToInventory" from="Player" to="UI/InventoryPanel" method="_on_player_add_item_to_inventory"]

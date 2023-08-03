@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b4b4yh0yinxvf"]
+[gd_scene load_steps=31 format=3 uid="uid://b4b4yh0yinxvf"]
 
 [ext_resource type="Script" path="res://DebugLabelContainer.cs" id="1_8oqur"]
 [ext_resource type="PackedScene" uid="uid://dpur83xqk6fri" path="res://Player.tscn" id="1_cl3kr"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://b1l23wp0tn2se" path="res://items/equipable/SimpleRing.tscn" id="16_ynkn8"]
 [ext_resource type="PackedScene" uid="uid://difgnpano42be" path="res://items/equipable/SteelHelmet.tscn" id="19_geboq"]
 [ext_resource type="PackedScene" uid="uid://b7tc13ufqb5hc" path="res://items/equipable/ManaRing.tscn" id="20_1w7kb"]
+[ext_resource type="PackedScene" uid="uid://xdqdpa7xf063" path="res://enemies/Zombie.tscn" id="26_pbi74"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_5dbrd"]
 vertices = PackedVector3Array(-30.6053, 0.46343, -4.35534, -34.8553, 0.46343, -0.105339, -30.6053, 0.46343, 4.14466, -26.1053, 0.46343, -8.60534, -4.35534, 0.46343, 30.3947, -0.105339, 0.46343, 34.8947, 4.14466, 0.46343, 30.6447, 4.39466, 0.46343, -30.6053, 0.144661, 0.46343, -34.8553, -4.35534, 0.46343, -30.6053, -8.60534, 0.46343, -26.1053, 8.64466, 0.46343, -26.1053, 30.3947, 0.46343, 4.39466, 34.8947, 0.46343, 0.144661, 30.6447, 0.46343, -4.35534, 26.1447, 0.46343, -8.60534, -26.1053, 0.46343, -8.60534, -30.6053, 0.46343, 4.14466, -26.3553, 0.46343, 8.64466, -21.8553, 0.46343, 12.8947, -17.3553, 0.46343, -17.3553, -21.8553, 0.46343, -13.1053, -21.8553, 0.46343, 12.8947, -17.6053, 0.46343, 17.3947, -13.1053, 0.46343, 21.6447, 12.8947, 0.46343, 21.8947, -13.1053, 0.46343, 21.6447, -8.85534, 0.46343, 26.1447, -4.35534, 0.46343, 30.3947, 4.14466, 0.46343, 30.6447, 8.64466, 0.46343, 26.3947, -13.1053, 0.46343, 21.6447, 12.8947, 0.46343, 21.8947, 21.6447, 0.46343, 13.1447, 17.3947, 0.46343, -17.3553, -17.3553, 0.46343, -17.3553, -21.8553, 0.46343, 12.8947, 12.8947, 0.46343, 21.8947, 17.3947, 0.46343, 17.6447, 21.6447, 0.46343, 13.1447, 17.3947, 0.46343, -17.3553, 21.6447, 0.46343, 13.1447, 26.1447, 0.46343, 8.89466, 30.3947, 0.46343, 4.39466, 26.1447, 0.46343, -8.60534, 21.8947, 0.46343, -13.1053, -17.3553, 0.46343, -17.3553, 17.3947, 0.46343, -17.3553, 13.1447, 0.46343, -21.8553, 8.64466, 0.46343, -26.1053, -8.60534, 0.46343, -26.1053, -13.1053, 0.46343, -21.8553)
@@ -315,37 +316,49 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.296832, 0.96343, 0.585862)
 
 [node name="ManaRing" parent="." instance=ExtResource("20_1w7kb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.569989, 0.0326309, 4.31528)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.47765, 0.0326309, 11.6919)
 
 [node name="GoldPouch" parent="." instance=ExtResource("5_r6vu7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.62772, 0.0326309, 7.7629)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41992, 0.0326309, 15.1395)
 
 [node name="GoldPouch2" parent="." instance=ExtResource("5_r6vu7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16686, 0.0326309, 6.73585)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88078, 0.0326309, 14.1124)
 
 [node name="GoldPouch3" parent="." instance=ExtResource("5_r6vu7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.27746, 0.0326309, 5.95684)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.770183, 0.0326309, 13.3334)
 
 [node name="HealthPotion" parent="." instance=ExtResource("8_s82a4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.12488, 0.0326309, 4.31709)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0772367, 0.0326309, 11.6937)
 
 [node name="HealthPotion2" parent="." instance=ExtResource("8_s82a4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.39264, 0.0326309, 3.96371)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.655003, 0.0326309, 11.3403)
 
 [node name="HealthPotion3" parent="." instance=ExtResource("8_s82a4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.49556, 0.0326309, 2.99818)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552083, 0.0326309, 10.3748)
 
 [node name="ManaPotion" parent="." instance=ExtResource("13_et4gt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6794, 0.0326309, -1.01999)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.36824, 0.0326309, 6.35661)
 
 [node name="ManaPotion2" parent="." instance=ExtResource("13_et4gt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.19378, 0.0326309, -2.04174)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85386, 0.0326309, 5.33486)
 
 [node name="SimpleRing" parent="." instance=ExtResource("16_ynkn8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50323, 0.0326309, 3.80314)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.54441, 0.0326309, 11.1797)
 
 [node name="SteelHelmet" parent="." instance=ExtResource("19_geboq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.56056, 0.0326307, -1.89637)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6082, 0.0326307, 5.48023)
+
+[node name="Zombie" parent="." instance=ExtResource("26_pbi74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.72468, 0.939888, -4.33175)
+Behaviour = null
+
+[node name="Zombie2" parent="." instance=ExtResource("26_pbi74")]
+transform = Transform3D(0.977261, 0, -0.212041, 0, 1, 0, 0.212041, 0, 0.977261, 5.93554, 0.939888, -3.19039)
+Behaviour = null
+
+[node name="Zombie3" parent="." instance=ExtResource("26_pbi74")]
+transform = Transform3D(0.600281, 0, 0.799789, 0, 1, 0, -0.799789, 0, 0.600281, 2.84458, 0.939888, -2.03313)
+Behaviour = null
 
 [connection signal="item_selected" from="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Bottom/ItemList" to="UI/InventoryPanel" method="_on_item_list_item_selected"]
 [connection signal="AddItemToInventory" from="Player" to="UI/InventoryPanel" method="_on_player_add_item_to_inventory"]

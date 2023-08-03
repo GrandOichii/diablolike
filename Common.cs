@@ -27,7 +27,7 @@ abstract public partial class ItemAction : Resource {
 	abstract public void Do(ItemResource item, Player player, int inventoryIdx);
 }
 
-abstract public partial class RemoveFromInventoryItemAction : ItemAction {
+public partial class RemoveFromInventoryItemAction : ItemAction {
 	
 	public override void Do(ItemResource item, Player player, int inventoryIdx) {
 		player.RemoveFromInventory(item, inventoryIdx);

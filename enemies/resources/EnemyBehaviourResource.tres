@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ewbejhwhcond"]
+
+[ext_resource type="Script" path="res://enemies/resources/EnemyBehaviourResource.cs" id="1_u87pl"]
+
+[resource]
+script = ExtResource("1_u87pl")

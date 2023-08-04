@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://t1ghug8qr4bl"]
+
+[ext_resource type="Script" path="res://enemies/behaviours/RoamStateResource.cs" id="1_2xhwl"]
+
+[resource]
+script = ExtResource("1_2xhwl")
+Speed = 2.0
+RandomPointRadius = 15.0

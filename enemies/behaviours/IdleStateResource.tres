@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://e6qhfiw6v5v5"]
+
+[ext_resource type="Script" path="res://enemies/behaviours/IdleStateResource.cs" id="1_0dufu"]
+
+[resource]
+script = ExtResource("1_0dufu")

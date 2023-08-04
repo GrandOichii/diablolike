@@ -3,11 +3,6 @@ using System;
 
 using Godot.Collections;
 
-public partial class State : Node {
-	public virtual void Start() {}
-	public virtual void Process(EnemyBase controlled, double delta) {}
-	public virtual void Stop() {}
-}
 
 public partial class EnemyBehaviourResource : Resource
 {
@@ -20,7 +15,7 @@ public partial class EnemyBehaviourResource : Resource
 			States[_currentState].Start();
 		}
 	}
-	public Dictionary<int, State> States { get; set; } = new();
+	public Dictionary<int, StateResource> States { get; set; } = new();
 	public Dictionary<string, Variant> Blackboard = new();
 //
 	public void Process(EnemyBase controlled, double delta) {

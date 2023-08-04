@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cgftkf4pxi12j"]
+
+[ext_resource type="Script" path="res://enemies/resources/StateResource.cs" id="1_f6wsl"]
+
+[resource]
+script = ExtResource("1_f6wsl")

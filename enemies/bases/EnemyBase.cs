@@ -5,6 +5,8 @@ using System;
 public partial class EnemyBase : CharacterBody3D
 {
 	[Export]
+	public Node3D MeshNode { get; set; }
+	[Export]
 	public int Experience { get; set; }
 
 	[Export]

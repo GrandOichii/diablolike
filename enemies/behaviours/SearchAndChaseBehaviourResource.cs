@@ -34,7 +34,6 @@ public partial class RoamState : State {
 		// TODO pretty bad, stop and start has to have a EnemyBase argument, can't implement now due to CurrentState being an auto field
 		var navAgent = controlled.NavAgent;
 		if (!_setPath) {
-			// TODO set path
 			var target = new Vector3((float)GD.RandRange(-RandomPointRadius, RandomPointRadius), 0, (float)GD.RandRange(-RandomPointRadius, RandomPointRadius));
 
 			navAgent.TargetPosition = controlled.Position + target;
@@ -48,7 +47,9 @@ public partial class RoamState : State {
 		var dir = controlled.GlobalPosition.DirectionTo(pos);
 		controlled.Velocity = dir * Speed;
 		// TODO turn
-		
+		var targetAngle = MathF.Atan2(controlled.Velocity.X,controlled.Velocity.Z);
+		var diff = (float)Mathf.Wrap(targetAngle - controlled.MeshNode.Rotation.Y, -Math.PI, Math.PI);
+		controlled.CreateTween().TweenProperty(controlled.MeshNode, "rotation", new Vector3(controlled.MeshNode.Rotation.X, controlled.MeshNode.Rotation.Y + diff, controlled.MeshNode.Rotation.Z), .1f);		
 		controlled.MoveAndSlide();
 	}
 	

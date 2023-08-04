@@ -9,7 +9,9 @@ public partial class RoamStateResource : StateResource {
 	
 	private bool _setPath = false;
 //	public Vector3 Target
-	public override void Process(EnemyBase controlled, double delta) {
+	public override void Process(EnemyBase controlled, bool isActive, double delta) {
+		if (!isActive) return;
+		
 		// TODO pretty bad, stop and start has to have a EnemyBase argument, can't implement now due to CurrentState being an auto field
 		var navAgent = controlled.NavAgent;
 		if (!_setPath) {

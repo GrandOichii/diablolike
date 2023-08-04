@@ -27,6 +27,9 @@ public partial class SearchAndChaseBehaviourResource : EnemyBehaviourResource
 	[Export]
 	public RoamStateResource RoamState { get; set; }
 
+	[Export]
+	public ChaseStateResource ChaseState { get; set; }
+
 
  	override public int CurrentState {
 		set {
@@ -52,6 +55,7 @@ public partial class SearchAndChaseBehaviourResource : EnemyBehaviourResource
 		AnimationsNode = enemy.GetNode<AnimationTree>(AnimationsNodePath);
 		States[(int)BStates.Idle] = IdleState;
 		States[(int)BStates.Roam] = RoamState;
+		States[(int)BStates.Chase] = ChaseState;
 		
 		CurrentState = (int)BStates.Idle;
 	}

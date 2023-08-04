@@ -19,7 +19,8 @@ public partial class EnemyBehaviourResource : Resource
 	public Dictionary<string, Variant> Blackboard = new();
 //
 	public void Process(EnemyBase controlled, double delta) {
-		States[CurrentState].Process(controlled, delta);
+		foreach (var pair in States)
+			pair.Value.Process(controlled, pair.Key == CurrentState, delta);
 	}
 //
 	public virtual void OnBodyDetected(Node3D body) {

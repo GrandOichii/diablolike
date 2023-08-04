@@ -211,26 +211,26 @@ public partial class Player : CharacterBody3D
 			DisplayServer.WindowSetMode(flag);
 			_fullscreen = !_fullscreen;
 		}
-		if (!_inventoryOpen && e.IsActionPressed("move_to")) {
-			var spaceState = GetWorld3D().DirectSpaceState;
-			// TODO crashes app on exit ???
-			var mousePos = GetViewport().GetMousePosition();
-			var rayOrigin = CameraNode.ProjectRayOrigin(mousePos);
-			var rayEnd = rayOrigin + CameraNode.ProjectRayNormal(mousePos) * 2000;
-			var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
-			var rayArr = spaceState.IntersectRay(query);
-			if (rayArr.ContainsKey("position")) {
-				var collider = rayArr["collider"].As<Node>();
-				if (!collider.IsInGroup("moveable_surface")) return;
-				var pos = rayArr["position"];
-				var v = pos.As<Vector3>();
-				var target = new Vector3(v.X, GlobalPosition.Y, v.Z);
-//				GlobalPosition = target;
-				NavigationAgentNode.TargetPosition = target;
-				_moveTo = true;
-				EmitSignal(SignalName.ClickedMoveTo, target);
-			}
-		}
+// 		if (!_inventoryOpen && e.IsActionPressed("move_to")) {
+// 			var spaceState = GetWorld3D().DirectSpaceState;
+// 			// TODO crashes app on exit ???
+// 			var mousePos = GetViewport().GetMousePosition();
+// 			var rayOrigin = CameraNode.ProjectRayOrigin(mousePos);
+// 			var rayEnd = rayOrigin + CameraNode.ProjectRayNormal(mousePos) * 2000;
+// 			var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
+// 			var rayArr = spaceState.IntersectRay(query);
+// 			if (rayArr.ContainsKey("position")) {
+// 				var collider = rayArr["collider"].As<Node>();
+// 				if (!collider.IsInGroup("moveable_surface")) return;
+// 				var pos = rayArr["position"];
+// 				var v = pos.As<Vector3>();
+// 				var target = new Vector3(v.X, GlobalPosition.Y, v.Z);
+// //				GlobalPosition = target;
+// 				NavigationAgentNode.TargetPosition = target;
+// 				_moveTo = true;
+// 				EmitSignal(SignalName.ClickedMoveTo, target);
+// 			}
+// 		}
 		if (e.IsActionPressed("scroll_up_focused_items")) {
 			CurItemI += 1;
 		}
@@ -247,6 +247,7 @@ public partial class Player : CharacterBody3D
 	}
 	
 	private void HandleZoom(float v) {
+		// TODO doenst really work that well, stutters
 		var d = CameraNode.Position.DirectionTo(MeshNode.Position);
 		var target = CameraNode.Position + (-d * v);
 		if (target.Y > _zoomYMax || target.Y < _zoomYMin) return;

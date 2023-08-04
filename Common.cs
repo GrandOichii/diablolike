@@ -23,8 +23,8 @@ public interface IItem {
 	public void SetViewed(bool v);
 }
 
-abstract public partial class ItemAction : Resource {
-	abstract public void Do(ItemResource item, Player player, int inventoryIdx);
+public partial class ItemAction : Resource {
+	public virtual void Do(ItemResource item, Player player, int inventoryIdx) {}
 }
 
 public partial class RemoveFromInventoryItemAction : ItemAction {

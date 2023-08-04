@@ -351,11 +351,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6082, 0.0326307, 5.48023)
 [node name="Zombie" parent="." instance=ExtResource("26_pbi74")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.72468, 0.939888, -4.33175)
 
-[node name="Zombie2" parent="." instance=ExtResource("26_pbi74")]
-transform = Transform3D(0.977261, 0, -0.212041, 0, 1, 0, 0.212041, 0, 0.977261, 5.93554, 0.939888, -3.19039)
-
-[node name="Zombie3" parent="." instance=ExtResource("26_pbi74")]
-transform = Transform3D(0.600281, 0, 0.799789, 0, 1, 0, -0.799789, 0, 0.600281, 2.84458, 0.939888, -2.03313)
+[node name="Skeleton3D" parent="Zombie/Mesh/Armature_002" index="0"]
+bones/1/rotation = Quaternion(-0.0304812, -0.00627422, 0.00341888, 0.99951)
+bones/2/rotation = Quaternion(0.0746493, -0.00745622, -0.00116976, 0.997181)
+bones/3/rotation = Quaternion(0.131628, -0.0076113, -0.000966651, 0.99127)
+bones/4/rotation = Quaternion(-0.0464647, 0.0291952, -0.0160859, 0.998364)
+bones/5/rotation = Quaternion(-0.190382, 0.131508, -0.0278465, 0.972463)
+bones/7/rotation = Quaternion(-0.478029, -0.520346, 0.605771, -0.365747)
+bones/8/rotation = Quaternion(0.413079, 0.0528698, 0.296793, 0.859351)
+bones/9/rotation = Quaternion(4.84904e-07, -3.14167e-07, 0.642897, 0.765953)
+bones/10/rotation = Quaternion(-0.169937, 0.171122, 0.00356378, 0.970477)
+bones/31/rotation = Quaternion(0.537571, -0.488994, 0.562308, 0.394604)
+bones/32/rotation = Quaternion(0.510745, -0.0270205, -0.314886, 0.799535)
+bones/33/rotation = Quaternion(8.61133e-08, 1.00452e-07, -0.70978, 0.704424)
+bones/34/rotation = Quaternion(-0.0258877, -0.237934, 0.0491399, 0.969692)
+bones/55/rotation = Quaternion(0.154224, 0.401293, 0.88834, -0.161339)
+bones/56/rotation = Quaternion(-0.411262, -0.0579108, 0.00956479, 0.909626)
+bones/57/rotation = Quaternion(0.576353, -0.0451724, -0.0610389, 0.813665)
+bones/58/rotation = Quaternion(0.227978, -0.0325208, -0.0153604, 0.973002)
+bones/60/rotation = Quaternion(-0.144387, 0.357347, 0.913915, 0.127338)
+bones/61/rotation = Quaternion(-0.400211, 0.0523661, -0.0116606, 0.914851)
+bones/62/rotation = Quaternion(0.597865, 0.0541364, 0.0781361, 0.795941)
 
 [connection signal="item_selected" from="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Bottom/ItemList" to="UI/InventoryPanel" method="_on_item_list_item_selected"]
 [connection signal="AddItemToInventory" from="Player" to="UI/InventoryPanel" method="_on_player_add_item_to_inventory"]
@@ -380,3 +396,6 @@ transform = Transform3D(0.600281, 0, 0.799789, 0, 1, 0, -0.799789, 0, 0.600281, 
 [connection signal="PropertyChanged" from="Player" to="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer/DefenceContainer/DefenceLabel" method="OnPlayerPropertyChanged"]
 [connection signal="RemoveItemFromInventory" from="Player" to="UI/InventoryPanel" method="_on_player_remove_item_from_inventory"]
 [connection signal="ToggleOpenInventory" from="Player" to="UI/InventoryPanel" method="_on_player_toggle_open_inventory"]
+
+[editable path="Zombie"]
+[editable path="Zombie/Mesh"]

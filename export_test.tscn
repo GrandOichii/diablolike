@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://mjg3yl5mdv6b"]
+
+[ext_resource type="Script" path="res://export_test.gd" id="1_a3vk5"]
+[ext_resource type="Resource" uid="uid://d33eyo5p15278" path="res://test_resource.tres" id="2_412pr"]
+
+[node name="ExportTest" type="Node3D" node_paths=PackedStringArray("node_path")]
+script = ExtResource("1_a3vk5")
+resource = ExtResource("2_412pr")
+node_path = NodePath("ChildNode")
+
+[node name="ChildNode" type="Node3D" parent="."]

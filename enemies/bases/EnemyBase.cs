@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
- [Tool]
+//[Tool]
 public partial class EnemyBase : CharacterBody3D
 {
 	[Export]
@@ -26,10 +26,13 @@ public partial class EnemyBase : CharacterBody3D
 	public override void _Ready() {
 		Collision = GetNode<CollisionShape3D>("%Collision");
 		DetectionCollision = GetNode<CollisionShape3D>("%DetectionCollision");
+		
+		Behaviour.Ready();
 	}
 	
 	protected virtual void OnDetectionAreaBodyEntered(Node3D body)
 	{
+//		GD.Print("anogs");
 		Behaviour.OnBodyDetected(body);
 	}
 	

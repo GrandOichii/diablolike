@@ -32,7 +32,7 @@ public partial class EnemyBehaviourResource : Resource
 //
 	public bool HasValue(string key) => Blackboard.ContainsKey(key);
 	
-	public virtual void Ready() {
+	public virtual void Ready(EnemyBase enemy) {
 		
 	}
 }

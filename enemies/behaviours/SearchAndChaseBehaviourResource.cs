@@ -4,23 +4,59 @@ using System;
 using Godot.Collections;
 
 public partial class IdleState : State {
-	private double _waitFor = 1;
+	[Export]
+	private double WaitFor { get; set; } = 3;
+	private double _waitLeft = 1;
 	
 	public override void Start() {
 //		CreateTimer();
+		_waitLeft = WaitFor;
 	}
 	
 	public override void Process(EnemyBase controlled, double delta) {
-		_waitFor -= delta;
-//		GD.Print("Process " + _waitFor);
-		if (_waitFor > 0) return;
+		_waitLeft -= delta;
+//		GD.Print("Process " + _waitLeft);
+		if (_waitLeft > 0) return;
 		
 		controlled.Behaviour.CurrentState = (int)SearchAndChaseBehaviourResource.BStates.Roam;
 	}
 }
 
 public partial class RoamState : State {
+	[Export]
+	public float Speed { get; set; } = 2;
+	[Export]
+	public float RandomPointRadius { get; set; } = 15;
 	
+	private bool _setPath = false;
+//	public Vector3 Target
+	public override void Process(EnemyBase controlled, double delta) {
+		// TODO pretty bad, stop and start has to have a EnemyBase argument, can't implement now due to CurrentState being an auto field
+		var navAgent = controlled.NavAgent;
+		if (!_setPath) {
+			// TODO set path
+			var target = new Vector3((float)GD.RandRange(-RandomPointRadius, RandomPointRadius), 0, (float)GD.RandRange(-RandomPointRadius, RandomPointRadius));
+
+			navAgent.TargetPosition = controlled.Position + target;
+			_setPath = true;
+		}
+		if (navAgent.IsNavigationFinished()) {
+			controlled.Behaviour.CurrentState = (int)SearchAndChaseBehaviourResource.BStates.Idle;
+			return;
+		}
+		var pos = navAgent.GetNextPathPosition();
+		var dir = controlled.GlobalPosition.DirectionTo(pos);
+		controlled.Velocity = dir * Speed;
+		// TODO turn
+		
+		controlled.MoveAndSlide();
+	}
+	
+	public override void Stop() {
+		base.Stop();
+		
+		_setPath = false;
+	}
 }
 
 
@@ -37,6 +73,9 @@ public partial class SearchAndChaseBehaviourResource : EnemyBehaviourResource
 	
 //	[Export]
 	public AnimationTree AnimationsNode { get; set; }
+	
+	[Export]
+	public NodePath AnimationsNodePath { get; set; }
 
 
  	override public int CurrentState {
@@ -47,7 +86,6 @@ public partial class SearchAndChaseBehaviourResource : EnemyBehaviourResource
 				AnimationsNode.Set("parameters/conditions/" + animKey, false);
 			var key = (BStates)value;
 			AnimationsNode.Set("parameters/conditions/" + AnimationMap[key.ToString()], true);
-			GD.Print("parameters/conditions/" + AnimationMap[key.ToString()]);
 		}
 	}
 
@@ -59,8 +97,9 @@ public partial class SearchAndChaseBehaviourResource : EnemyBehaviourResource
 			Blackboard.Add("player", body as Player);
 	}
 	
-	public override void Ready() {
-		base.Ready();
+	public override void Ready(EnemyBase enemy) {
+		base.Ready(enemy);
+		AnimationsNode = enemy.GetNode<AnimationTree>(AnimationsNodePath);
 		States[(int)BStates.Idle] = new IdleState();
 		States[(int)BStates.Roam] = new RoamState();
 		

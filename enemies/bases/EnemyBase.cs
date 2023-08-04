@@ -22,12 +22,14 @@ public partial class EnemyBase : CharacterBody3D
 	
 	public CollisionShape3D Collision { get; set; }
 	public CollisionShape3D DetectionCollision { get; set; }
+	public NavigationAgent3D NavAgent { get; set; }
 	
 	public override void _Ready() {
 		Collision = GetNode<CollisionShape3D>("%Collision");
 		DetectionCollision = GetNode<CollisionShape3D>("%DetectionCollision");
+		NavAgent = GetNode<NavigationAgent3D>("%NavigationAgent");
 		
-		Behaviour.Ready();
+		Behaviour.Ready(this);
 	}
 	
 	protected virtual void OnDetectionAreaBodyEntered(Node3D body)

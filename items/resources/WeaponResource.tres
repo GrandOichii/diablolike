@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dhfqiltvkoqpc"]
+
+[ext_resource type="Script" path="res://items/resources/WeaponResource.cs" id="1_of0ga"]
+
+[resource]
+script = ExtResource("1_of0ga")
+Slot = 0
+PropertyMod = {}
+InventoryName = ""
+Description = ""
+Actions = {}

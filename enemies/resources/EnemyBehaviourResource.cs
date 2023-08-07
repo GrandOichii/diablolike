@@ -22,13 +22,10 @@ public partial class EnemyBehaviourResource : Resource
 		foreach (var pair in States)
 			pair.Value.Process(controlled, pair.Key == CurrentState, delta);
 	}
-//
-	public virtual void OnBodyDetected(Node3D body) {
-	}
-//
+
+	public virtual void OnBodyDetected(Node3D body) {}
+
 	public bool HasValue(string key) => Blackboard.ContainsKey(key);
 	
-	public virtual void Ready(EnemyBase enemy) {
-		
-	}
+	public virtual void Ready(EnemyBase enemy) {}
 }

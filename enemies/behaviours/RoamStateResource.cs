@@ -29,6 +29,7 @@ public partial class RoamStateResource : StateResource {
 		controlled.Velocity = dir * Speed;
 		// TODO turn
 		var targetAngle = MathF.Atan2(controlled.Velocity.X,controlled.Velocity.Z);
+		GD.Print(controlled.MeshNode);
 		var diff = (float)Mathf.Wrap(targetAngle - controlled.MeshNode.Rotation.Y, -Math.PI, Math.PI);
 		controlled.CreateTween().TweenProperty(controlled.MeshNode, "rotation", new Vector3(controlled.MeshNode.Rotation.X, controlled.MeshNode.Rotation.Y + diff, controlled.MeshNode.Rotation.Z), .1f);		
 		controlled.MoveAndSlide();

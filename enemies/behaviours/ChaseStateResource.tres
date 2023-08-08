@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_lfjv7")
+Speed = 0.5

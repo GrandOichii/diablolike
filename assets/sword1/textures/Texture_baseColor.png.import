@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dquhung56wnvu"
-path.s3tc="res://.godot/imported/tile097.png-696c2c472c3dbdadd3f29a2a26ee144d.s3tc.ctex"
+uid="uid://brh0ilhnjka1j"
+path.s3tc="res://.godot/imported/Texture_baseColor.png-658a759c2d2644afd4a82e0b490752eb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/item_icons/batch1/tile097.png"
-dest_files=["res://.godot/imported/tile097.png-696c2c472c3dbdadd3f29a2a26ee144d.s3tc.ctex"]
+source_file="res://assets/sword1/textures/Texture_baseColor.png"
+dest_files=["res://.godot/imported/Texture_baseColor.png-658a759c2d2644afd4a82e0b490752eb.s3tc.ctex"]
 
 [params]
 

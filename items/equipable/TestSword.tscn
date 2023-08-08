@@ -1,0 +1,36 @@
+[gd_scene load_steps=10 format=3 uid="uid://dwtsdhdrgunil"]
+
+[ext_resource type="PackedScene" uid="uid://dqg0xs3pj2lak" path="res://items/bases/InventoryItemBase.tscn" id="1_c84p8"]
+[ext_resource type="Script" path="res://items/equipable/TestSword.cs" id="2_tmm63"]
+[ext_resource type="PackedScene" uid="uid://b4t52rn8eegxf" path="res://assets/sword1/scene.gltf" id="3_4m7ul"]
+[ext_resource type="Texture2D" uid="uid://dquhung56wnvu" path="res://assets/item_icons/batch1/tile097.png" id="3_fmc7l"]
+[ext_resource type="Resource" uid="uid://dbclfwrgo5pm6" path="res://items/actions/EquipItemAction.tres" id="3_yjbkh"]
+[ext_resource type="Script" path="res://damage/DamageResource.cs" id="4_katei"]
+[ext_resource type="Script" path="res://items/resources/WeaponResource.cs" id="5_eg3gs"]
+
+[sub_resource type="Resource" id="Resource_aurxw"]
+script = ExtResource("4_katei")
+MinDamage = 10.0
+MaxDamage = 12.0
+
+[sub_resource type="Resource" id="Resource_1va8b"]
+script = ExtResource("5_eg3gs")
+OnHitDamage = SubResource("Resource_aurxw")
+WeaponScene = ExtResource("3_4m7ul")
+Slot = 4
+PropertyMod = {}
+InventoryName = "Test Sword"
+InventoryIcon = ExtResource("3_fmc7l")
+Description = "A simple sword. Is good for killing ordinary enemies.
+
+[color=green]10[/color] - [color=green]12[/color] damage on hit."
+Actions = {
+"Equip": ExtResource("3_yjbkh")
+}
+
+[node name="TestSwotd" instance=ExtResource("1_c84p8")]
+script = ExtResource("2_tmm63")
+Item = SubResource("Resource_1va8b")
+
+[node name="Mesh" parent="." index="0" instance=ExtResource("3_4m7ul")]
+transform = Transform3D(0.0245746, -0.0172073, -7.52155e-10, -4.57379e-25, -1.31134e-09, 0.03, -0.0172073, -0.0245746, -1.07419e-09, 0.0441346, 0, 0.0546066)

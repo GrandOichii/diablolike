@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b4b4yh0yinxvf"]
+[gd_scene load_steps=32 format=3 uid="uid://b4b4yh0yinxvf"]
 
 [ext_resource type="Script" path="res://DebugLabelContainer.cs" id="1_8oqur"]
 [ext_resource type="PackedScene" uid="uid://dpur83xqk6fri" path="res://Player.tscn" id="1_cl3kr"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://b6f1ddo6mnyor" path="res://assets/item_icons/equipment_placeholders/helmet.png" id="10_ukman"]
 [ext_resource type="Script" path="res://NavigationPointer.gd" id="11_8tnqw"]
 [ext_resource type="Texture2D" uid="uid://c60m5daimys6g" path="res://assets/item_icons/equipment_placeholders/chest.png" id="11_jx8lc"]
+[ext_resource type="PackedScene" uid="uid://dwtsdhdrgunil" path="res://items/equipable/TestSword.tscn" id="12_04ot7"]
 [ext_resource type="Texture2D" uid="uid://bo4hcqesw7fk2" path="res://assets/item_icons/equipment_placeholders/legs.png" id="12_ognu0"]
 [ext_resource type="PackedScene" uid="uid://eoypekng8w30" path="res://items/ManaPotion.tscn" id="13_et4gt"]
 [ext_resource type="PackedScene" uid="uid://b1l23wp0tn2se" path="res://items/equipable/SimpleRing.tscn" id="16_ynkn8"]
@@ -42,6 +43,128 @@ size = Vector2(50, 50)
 data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
 
 [node name="Playground" type="Node"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_5dbrd")
+
+[node name="Playground" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(0.707107, -4.93259e-16, -0.707107, 3.48787e-16, 1, -3.48787e-16, 0.707107, 1.60554e-24, 0.707107, 0, 4.41715, 0)
+
+[node name="Plane" type="MeshInstance3D" parent="NavigationRegion3D/Playground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.45372, 0)
+mesh = SubResource("PlaneMesh_028pr")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="NavigationRegion3D/Playground/Plane" groups=["moveable_surface"]]
+
+[node name="PlaneCollision" type="CollisionShape3D" parent="NavigationRegion3D/Playground/Plane/StaticBody3D2"]
+shape = SubResource("ConcavePolygonShape3D_lxljd")
+script = ExtResource("3_icaw8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="NavigationRegion3D/Playground"]
+transform = Transform3D(-0.594112, 0.20263, 0.778442, 0.702937, 0.601245, 0.37998, -0.391039, 0.772946, -0.499642, 12.3612, 11.9645, -0.218888)
+
+[node name="NavigationPointer" parent="." groups=["dissapear_on_player_collide"] instance=ExtResource("10_t0bsp")]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+visible = false
+script = ExtResource("11_8tnqw")
+
+[node name="Player" parent="." instance=ExtResource("1_cl3kr")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.296832, 0.96343, 0.585862)
+
+[node name="ManaRing" parent="." instance=ExtResource("20_1w7kb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.47765, 0.0326309, 11.6919)
+
+[node name="GoldPouch" parent="." instance=ExtResource("5_r6vu7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41992, 0.0326309, 15.1395)
+
+[node name="GoldPouch2" parent="." instance=ExtResource("5_r6vu7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88078, 0.0326309, 14.1124)
+
+[node name="GoldPouch3" parent="." instance=ExtResource("5_r6vu7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.770183, 0.0326309, 13.3334)
+
+[node name="HealthPotion" parent="." instance=ExtResource("8_s82a4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0772367, 0.0326309, 11.6937)
+
+[node name="HealthPotion2" parent="." instance=ExtResource("8_s82a4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.655003, 0.0326309, 11.3403)
+
+[node name="HealthPotion3" parent="." instance=ExtResource("8_s82a4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552083, 0.0326309, 10.3748)
+
+[node name="ManaPotion" parent="." instance=ExtResource("13_et4gt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.36824, 0.0326309, 6.35661)
+
+[node name="ManaPotion2" parent="." instance=ExtResource("13_et4gt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85386, 0.0326309, 5.33486)
+
+[node name="SimpleRing" parent="." instance=ExtResource("16_ynkn8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.54441, 0.0326309, 11.1797)
+
+[node name="SteelHelmet" parent="." instance=ExtResource("19_geboq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6082, 0.0326307, 5.48023)
+
+[node name="TestSwotd" parent="." instance=ExtResource("12_04ot7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.788541, 0.0326307, 5.55563)
+
+[node name="Zombie" parent="." instance=ExtResource("26_pbi74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27912, 0.939888, -3.55084)
+
+[node name="Skeleton3D" parent="Zombie/Mesh/Armature_002" index="0"]
+bones/1/position = Vector3(2.1552e-06, 0.972606, 4.84357e-07)
+bones/1/rotation = Quaternion(0.0196918, -0.025509, -0.0136685, 0.999387)
+bones/2/rotation = Quaternion(-0.0136516, -0.00601564, 0.00914914, 0.999847)
+bones/3/rotation = Quaternion(0.0244089, -0.00681436, 0.00243582, 0.999676)
+bones/4/rotation = Quaternion(0.0819339, -0.00638759, 0.00348601, 0.996611)
+bones/5/rotation = Quaternion(0.122023, 0.0360618, -0.0787833, 0.988738)
+bones/6/rotation = Quaternion(0.295882, 0.0374097, -0.0665651, 0.952168)
+bones/8/rotation = Quaternion(-0.561709, -0.475535, 0.531122, -0.419832)
+bones/9/rotation = Quaternion(0.338926, 0.262447, 0.306244, 0.84998)
+bones/10/rotation = Quaternion(4.98713e-07, -2.8956e-07, 0.471875, 0.881666)
+bones/11/rotation = Quaternion(-0.0278589, -0.10479, -0.16734, 0.979919)
+bones/12/rotation = Quaternion(0.209986, -0.0554553, 0.0959483, 0.971403)
+bones/13/rotation = Quaternion(-0.0519377, 0.0153885, -0.22633, 0.972543)
+bones/14/rotation = Quaternion(-0.0441526, 0.00835189, -0.0853579, 0.995337)
+bones/16/rotation = Quaternion(-0.0655987, 0.00221093, 0.0396986, 0.997054)
+bones/17/rotation = Quaternion(0.149877, -1.09427e-06, -0.0180939, 0.988539)
+bones/18/rotation = Quaternion(0.0751567, -1.67332e-07, -0.00906969, 0.997131)
+bones/20/rotation = Quaternion(-0.119233, 6.4378e-08, 0.0143889, 0.992762)
+bones/21/rotation = Quaternion(0.150019, -1.99263e-07, -0.0181042, 0.988517)
+bones/22/rotation = Quaternion(0.075155, -3.37117e-08, -0.00906981, 0.997131)
+bones/24/rotation = Quaternion(-0.0874958, -2.00837e-07, 0.0105635, 0.996109)
+bones/25/rotation = Quaternion(0.152079, -1.34823e-06, -0.0183611, 0.988198)
+bones/26/rotation = Quaternion(0.0851843, 5.28912e-08, -0.0102801, 0.996312)
+bones/28/rotation = Quaternion(-0.0635308, -0.00213194, -0.0280387, 0.997584)
+bones/29/rotation = Quaternion(0.158173, 0.00546721, 0.0160239, 0.987266)
+bones/30/rotation = Quaternion(0.0947884, 2.23298e-05, -0.011209, 0.995434)
+bones/32/rotation = Quaternion(0.510544, -0.507224, 0.570873, 0.395185)
+bones/33/rotation = Quaternion(0.326906, -0.342294, -0.461057, 0.750596)
+bones/34/rotation = Quaternion(2.00833e-07, 2.14155e-08, -0.269449, 0.963015)
+bones/35/rotation = Quaternion(-0.329833, 0.383236, -0.0809012, 0.85895)
+bones/36/rotation = Quaternion(0.191852, 0.0945957, -0.0794602, 0.973617)
+bones/37/rotation = Quaternion(0.048808, -0.000434254, 0.262361, 0.963735)
+bones/38/rotation = Quaternion(0.00852905, -0.000269227, 0.0846336, 0.996376)
+bones/40/rotation = Quaternion(-0.0417025, -0.00134068, -0.034669, 0.998528)
+bones/41/rotation = Quaternion(0.216289, 1.13149e-06, 0.0263626, 0.975973)
+bones/42/rotation = Quaternion(0.0899871, -5.65454e-08, 0.0109661, 0.995883)
+bones/44/rotation = Quaternion(-0.097464, 1.61433e-08, -0.0118782, 0.995168)
+bones/45/rotation = Quaternion(0.253037, 6.93461e-08, 0.0308371, 0.966965)
+bones/46/rotation = Quaternion(0.127575, 6.19813e-08, 0.0155472, 0.991707)
+bones/48/rotation = Quaternion(-0.0589443, 7.13874e-08, -0.00718843, 0.998235)
+bones/49/rotation = Quaternion(0.253034, 2.38714e-06, 0.0308445, 0.966966)
+bones/50/rotation = Quaternion(0.127577, 2.24917e-07, 0.0155477, 0.991707)
+bones/52/rotation = Quaternion(-0.0309909, 2.53888e-08, -0.0037802, 0.999513)
+bones/53/rotation = Quaternion(0.253035, 3.01655e-06, 0.0308471, 0.966965)
+bones/54/rotation = Quaternion(0.127577, -1.48896e-06, 0.0155368, 0.991707)
+bones/56/rotation = Quaternion(0.18134, 0.168827, 0.966567, -0.0660388)
+bones/57/rotation = Quaternion(-0.209701, 0.0107683, 0.0596727, 0.975884)
+bones/58/rotation = Quaternion(0.564248, -0.0383952, -0.0548703, 0.822885)
+bones/59/rotation = Quaternion(0.228887, -0.0323222, -0.0152953, 0.972796)
+bones/61/rotation = Quaternion(-0.153639, 0.14657, 0.977017, 0.0187027)
+bones/62/rotation = Quaternion(-0.207139, 0.068475, -0.0623471, 0.973919)
+bones/63/rotation = Quaternion(0.573774, 0.0530252, 0.0256214, 0.816894)
+bones/64/rotation = Quaternion(0.227709, 0.0321196, 0.0152578, 0.97308)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -287,107 +410,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_5dbrd")
-
-[node name="Playground" type="Node3D" parent="NavigationRegion3D"]
-transform = Transform3D(0.707107, -4.93259e-16, -0.707107, 3.48787e-16, 1, -3.48787e-16, 0.707107, 1.60554e-24, 0.707107, 0, 4.41715, 0)
-
-[node name="Plane" type="MeshInstance3D" parent="NavigationRegion3D/Playground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.45372, 0)
-mesh = SubResource("PlaneMesh_028pr")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="NavigationRegion3D/Playground/Plane" groups=["moveable_surface"]]
-
-[node name="PlaneCollision" type="CollisionShape3D" parent="NavigationRegion3D/Playground/Plane/StaticBody3D2"]
-shape = SubResource("ConcavePolygonShape3D_lxljd")
-script = ExtResource("3_icaw8")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="NavigationRegion3D/Playground"]
-transform = Transform3D(-0.594112, 0.20263, 0.778442, 0.702937, 0.601245, 0.37998, -0.391039, 0.772946, -0.499642, 12.3612, 11.9645, -0.218888)
-
-[node name="NavigationPointer" parent="." groups=["dissapear_on_player_collide"] instance=ExtResource("10_t0bsp")]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
-visible = false
-script = ExtResource("11_8tnqw")
-
-[node name="Player" parent="." instance=ExtResource("1_cl3kr")]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.296832, 0.96343, 0.585862)
-
-[node name="ManaRing" parent="." instance=ExtResource("20_1w7kb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.47765, 0.0326309, 11.6919)
-
-[node name="GoldPouch" parent="." instance=ExtResource("5_r6vu7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41992, 0.0326309, 15.1395)
-
-[node name="GoldPouch2" parent="." instance=ExtResource("5_r6vu7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88078, 0.0326309, 14.1124)
-
-[node name="GoldPouch3" parent="." instance=ExtResource("5_r6vu7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.770183, 0.0326309, 13.3334)
-
-[node name="HealthPotion" parent="." instance=ExtResource("8_s82a4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0772367, 0.0326309, 11.6937)
-
-[node name="HealthPotion2" parent="." instance=ExtResource("8_s82a4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.655003, 0.0326309, 11.3403)
-
-[node name="HealthPotion3" parent="." instance=ExtResource("8_s82a4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552083, 0.0326309, 10.3748)
-
-[node name="ManaPotion" parent="." instance=ExtResource("13_et4gt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.36824, 0.0326309, 6.35661)
-
-[node name="ManaPotion2" parent="." instance=ExtResource("13_et4gt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85386, 0.0326309, 5.33486)
-
-[node name="SimpleRing" parent="." instance=ExtResource("16_ynkn8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.54441, 0.0326309, 11.1797)
-
-[node name="SteelHelmet" parent="." instance=ExtResource("19_geboq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6082, 0.0326307, 5.48023)
-
-[node name="Zombie" parent="." instance=ExtResource("26_pbi74")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27912, 0.939888, -3.55084)
-
-[node name="Skeleton3D" parent="Zombie/Mesh/Armature_002" index="0"]
-bones/1/position = Vector3(2.05844e-06, 0.973708, 4.84517e-07)
-bones/1/rotation = Quaternion(0.018687, -0.0246959, -0.0137936, 0.999425)
-bones/2/rotation = Quaternion(-0.0131706, -0.00647539, 0.0101857, 0.99984)
-bones/3/rotation = Quaternion(0.0245432, -0.00674324, 0.00231422, 0.999673)
-bones/4/rotation = Quaternion(0.0821657, -0.00632513, 0.0033521, 0.996593)
-bones/5/rotation = Quaternion(0.114697, 0.0360655, -0.0854221, 0.989064)
-bones/6/rotation = Quaternion(0.250707, 0.0368748, -0.0884232, 0.963311)
-bones/8/rotation = Quaternion(-0.558999, -0.479053, 0.523737, -0.428636)
-bones/9/rotation = Quaternion(0.360269, 0.183579, 0.307689, 0.861297)
-bones/10/rotation = Quaternion(4.85499e-07, -3.20564e-07, 0.535979, 0.844231)
-bones/11/rotation = Quaternion(-0.202663, -0.129572, -0.196185, 0.950605)
-bones/16/rotation = Quaternion(-0.103886, 0.00343057, 0.0442091, 0.9936)
-bones/24/rotation = Quaternion(-0.119057, -4.40909e-07, 0.0143723, 0.992783)
-bones/25/rotation = Quaternion(0.151386, -1.33628e-06, -0.0182774, 0.988306)
-bones/26/rotation = Quaternion(0.0766239, 9.96943e-08, -0.00924706, 0.997017)
-bones/28/rotation = Quaternion(-0.0463813, -0.00151317, -0.0301399, 0.998468)
-bones/29/rotation = Quaternion(0.0857281, 0.00288945, 0.0250764, 0.995999)
-bones/30/rotation = Quaternion(0.0470312, 1.13904e-05, -0.00544484, 0.998879)
-bones/32/rotation = Quaternion(0.498405, -0.518192, 0.561917, 0.409046)
-bones/33/rotation = Quaternion(0.340608, -0.283743, -0.495487, 0.746973)
-bones/34/rotation = Quaternion(3.43061e-07, 1.25261e-07, -0.253229, 0.967406)
-bones/35/rotation = Quaternion(-0.450554, 0.36976, -0.171517, 0.794268)
-bones/40/rotation = Quaternion(-0.0392483, -0.00225319, -0.0545086, 0.997739)
-bones/41/rotation = Quaternion(0.174387, 9.42314e-07, 0.0212561, 0.984448)
-bones/42/rotation = Quaternion(0.0473516, -3.48469e-08, 0.00577035, 0.998862)
-bones/48/rotation = Quaternion(-0.0974484, 3.37191e-07, -0.0118808, 0.99517)
-bones/52/rotation = Quaternion(-0.0973941, 2.17055e-07, -0.0118725, 0.995175)
-bones/56/rotation = Quaternion(0.181282, 0.164456, 0.967403, -0.0649806)
-bones/57/rotation = Quaternion(-0.206715, 0.013652, 0.0636862, 0.976231)
-bones/58/rotation = Quaternion(0.565234, -0.0446487, -0.0638446, 0.821244)
-bones/59/rotation = Quaternion(0.228457, -0.0323938, -0.0153205, 0.972894)
-bones/61/rotation = Quaternion(-0.165843, 0.140812, 0.975798, 0.0220602)
-bones/62/rotation = Quaternion(-0.203621, 0.0549762, -0.0542272, 0.976)
-bones/63/rotation = Quaternion(0.574728, 0.0531341, 0.0205992, 0.816358)
-
-[connection signal="item_selected" from="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Bottom/ItemList" to="UI/InventoryPanel" method="_on_item_list_item_selected"]
 [connection signal="AddItemToInventory" from="Player" to="UI/InventoryPanel" method="_on_player_add_item_to_inventory"]
 [connection signal="ClickedMoveTo" from="Player" to="NavigationPointer" method="_on_player_clicked_move_to"]
 [connection signal="GoldAmountChanged" from="Player" to="UI/GoldLabel" method="_on_player_gold_amount_changed"]
@@ -410,6 +432,7 @@ bones/63/rotation = Quaternion(0.574728, 0.0531341, 0.0205992, 0.816358)
 [connection signal="PropertyChanged" from="Player" to="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Top/VBoxContainer/DefenceContainer/DefenceLabel" method="OnPlayerPropertyChanged"]
 [connection signal="RemoveItemFromInventory" from="Player" to="UI/InventoryPanel" method="_on_player_remove_item_from_inventory"]
 [connection signal="ToggleOpenInventory" from="Player" to="UI/InventoryPanel" method="_on_player_toggle_open_inventory"]
+[connection signal="item_selected" from="UI/InventoryPanel/Panel/MarginContainer/VBoxContainer/Bottom/ItemList" to="UI/InventoryPanel" method="_on_item_list_item_selected"]
 
 [editable path="Zombie"]
 [editable path="Zombie/Mesh"]

@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_2xhwl")
-Speed = 2.0
+Speed = 0.5
 RandomPointRadius = 15.0
